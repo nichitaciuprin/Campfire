@@ -26,4 +26,4 @@ src="$src $deps/Sys/src/SysNet.c"
 rm -rf build
 mkdir build
 
-g++ main.cpp $src -o build/CampfireClient.exe $flags $include $lib -lGL -lm -lpthread -ldl -lrt -lX11
+g++ main.cpp $src -o build/CampfireClient $flags $include $lib -lGL -lm -lpthread -ldl -lrt -lX11

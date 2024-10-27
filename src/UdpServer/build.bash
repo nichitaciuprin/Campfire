@@ -20,10 +20,11 @@ include="$include -I./src"
 
 src=
 src="$src $deps/Sys/src/SysHelper.c"
-src="$src $deps/Sys/src/SysWindow.c"
+# src="$src $deps/Sys/src/SysWindow.c"
 src="$src $deps/Sys/src/SysNet.c"
 
 rm -rf build
 mkdir build
 
-g++ main.cpp $src -o build/CampfireServer.exe $flags $include $lib -lGL -lm -lpthread -ldl -lrt -lX11
+# g++ main.cpp $src -o build/CampfireServer.exe $flags $include $lib -lGL -lm -lpthread -ldl -lrt -lX11
+g++ main.cpp $src -o build/CampfireServer $flags $include $lib -lGL -lm -lpthread -ldl -lrt

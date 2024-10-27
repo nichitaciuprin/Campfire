@@ -1,5 +1,5 @@
 #include "SysHelper.h"
-#include "SysWindow.h"
+// #include "SysWindow.h"
 #include "SysNet.h"
 
 #include "Std.h"
