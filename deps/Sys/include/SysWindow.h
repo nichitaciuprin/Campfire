@@ -2,6 +2,7 @@
 #define SYSWINDOW_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef struct BitmapWindow BitmapWindow;
 BitmapWindow* BitmapWindow_Create(int x, int y, int clientWidth, int clientHeight);

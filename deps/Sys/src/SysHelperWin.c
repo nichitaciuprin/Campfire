@@ -50,9 +50,9 @@ int GetCpuUsage()
 
     // cpu = GetCpuUsageDiff(idleOld, idleNew, userOld, userNew);
 
-    auto idle = idleNew.dwLowDateTime - idleOld.dwLowDateTime;
-    auto user = userNew.dwLowDateTime - userOld.dwLowDateTime;
-    auto all = idle + user;
+    DWORD idle = idleNew.dwLowDateTime - idleOld.dwLowDateTime;
+    DWORD user = userNew.dwLowDateTime - userOld.dwLowDateTime;
+    DWORD all = idle + user;
     cpu = all == 0 ? 0 : user * 100 / all;
 
     idleOld = idleNew;

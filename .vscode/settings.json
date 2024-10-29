@@ -124,7 +124,8 @@
         "_mingw_secapi.h": "c",
         "_mingw_mac.h": "c",
         "lightwindow.h": "c",
-        "any": "cpp"
+        "any": "cpp",
+        "helper.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

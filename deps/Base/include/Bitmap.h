@@ -84,8 +84,8 @@ public:
     void DrawCube(Vector3 position, Vector3 rotation, Camera camera, Pixel pixel)
     {
         Vector3 scale = { 1, 1, 1 };
-        auto world = MatrixWorld(position, rotation, scale);
-        auto view = MatrixView(&camera);
+        auto world = MatrixWorld2(position, rotation, scale);
+        auto view = MatrixView3(&camera);
         DrawCube(world * view, pixel);
     }
 
@@ -334,7 +334,7 @@ public:
         for (size_t i = 0; i < pixels.size(); i++)
         {
             float depthLength = 100;
-            float factor = MathClamp(zbuffer[i], 0.0f, depthLength);
+            float factor = MathClampFloat(zbuffer[i], 0.0f, depthLength);
             factor /= depthLength;
             factor = 1 - factor;
             auto byte = (int)(factor * 255);
@@ -370,9 +370,9 @@ public:
         int dy1 = p2.y - p0.y;
         int dy2 = p1.y - p0.y;
         int dy3 = p2.y - p1.y;
-        int dir1 = MathSign(dx1);
-        int dir2 = MathSign(dx2);
-        int dir3 = MathSign(dx3);
+        int dir1 = MathSignFloat(dx1);
+        int dir2 = MathSignFloat(dx2);
+        int dir3 = MathSignFloat(dx3);
         int dx1abs = abs(dx1);
         int dx2abs = abs(dx2);
         int dx3abs = abs(dx3);

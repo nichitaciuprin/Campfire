@@ -12,7 +12,7 @@ void Draw(Bitmap& bitmap, Camera camera, long time)
 {
     bitmap.Fill(BLACK);
 
-    auto view = MatrixView(&camera);
+    auto view = MatrixView3(&camera);
 
     {
         Vector3 p0 = { -1, 0,  2 }; p0 *= view;
@@ -38,7 +38,7 @@ void Draw(Bitmap& bitmap, Camera camera, long time)
         Vector3 position = { 0, 0.5f, 100 };
         Vector3 rotation = { 0, time2, 0 };
         Vector3 scale = { 1, 1, 1 };
-        auto world = MatrixWorld(position, rotation, scale);
+        auto world = MatrixWorld2(position, rotation, scale);
         bitmap.DrawCubeColored(world * view);
     }
     {
@@ -46,7 +46,7 @@ void Draw(Bitmap& bitmap, Camera camera, long time)
         Vector3 position = { 0, 1.5f, 100 };
         Vector3 rotation = { 0, time2, 0 };
         Vector3 scale = { 1, 1, 1 };
-        auto world = MatrixWorld(position, rotation, scale);
+        auto world = MatrixWorld2(position, rotation, scale);
         bitmap.DrawCubeColored(world * view);
     }
 }

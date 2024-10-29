@@ -15,24 +15,23 @@ set build=%batdir%build
 @REM -Og     optimize debugging experience. -Og enables optimizations that do not interfere with debugging. It should be the optimization level of choice for the standard edit-compile-debug cycle, offering a reasonable level of optimization while maintaining fast compilation and a good debugging experience.
 @REM -Os     optimize for size. -Os enables all -O2 optimizations that do not typically increase code size. It also performs further optimizations designed to reduce code size. -Os disables the following optimization flags: -falign-functions -falign-jumps -falign-loops -falign-labels -freorder-blocks -freorder-blocks-and-partition -fprefetch-loop-arrays -ftree-vect-loop-version
 
-set flags=-g3 -Og -Werror -Wall -std=c++17 -Wno-missing-braces -pthread -m64
+set flags=-g3 -Og -Werror -Wall -std=c17 -Wno-missing-braces -pthread -m64
 
-set lib=
-set lib=%lib% -L%deps%\raylib\lib -lraylib -lgdi32 -lwinmm
-set lib=%lib% -L%deps%\ReactPhysics3D\lib -lreactphysics3d
-set lib=%lib% -lWs2_32
+@REM set src=
+@REM set src=%src% %deps%\Sys\src\SysHelper.c
+@REM set src=%src% %deps%\Sys\src\SysWindow.c
+@REM set src=%src% %deps%\Sys\src\SysNet.c
 
 set include=
-set include=%include% -I%deps%\Base\include
 set include=%include% -I%deps%\Sys\include
+set include=%include% -I%deps%\Base\include
 set include=%include% -I%~dp0src
 
-set src=
-set src=%src% %deps%\Sys\src\SysHelper.c
-set src=%src% %deps%\Sys\src\SysWindow.c
-set src=%src% %deps%\Sys\src\SysNet.c
+set lib=
+set lib=%lib% -lgdi32
+set lib=%lib% -lWs2_32
 
 if exist %build% rmdir /S /Q %build%
    mkdir %build%
 
-g++ main.cpp %src% -o build/main.exe %flags% %include% %lib%
+gcc main.c %src% -o build/CampfireClient.exe %flags% %include% %lib%

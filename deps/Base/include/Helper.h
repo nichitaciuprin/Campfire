@@ -14,77 +14,98 @@
 // https://gabrielgambetta.com/computer-graphics-from-scratch/11-clipping.html
 // https://www.youtube.com/watch?v=HXSuNxpCzdM&ab_channel=javidx9
 
-#pragma once
+#ifndef HELPER_H
+#define HELPER_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <memory.h>
+#include <time.h>
+#include <math.h>
+
+#include "Subgen.h"
 
 #define MY_PI        (float)3.14159265358979323846
 #define MY_PI_MUL_2  (float)6.28318530717958647692
 #define MY_PI_DIV_2  (float)1.57079632679489661923
 
-struct Vector2
+typedef struct Vector2
 {
     float x, y;
-};
-struct Vector3
+}
+Vector2;
+typedef struct Vector3
 {
     float x, y, z;
-};
-struct Vector4
+}
+Vector3;
+typedef struct Vector4
 {
     float x, y, z, w;
-};
-struct Vector2Int
+}
+Vector4;
+typedef struct Vector2Int
 {
     int x, y;
-};
-struct Matrix
+}
+Vector2Int;
+typedef struct Matrix
 {
     float m[4][4];
-};
-struct Camera
+}
+Matrix;
+typedef struct Camera
 {
     Vector3 position;
     float yaw;
     float pitch;
-};
-struct Bound
+}
+Camera;
+typedef struct Bound
 {
     Vector3 p0;
     Vector3 p1;
-};
-struct Box
+}
+Bound;
+typedef struct Box
 {
     Vector3 position;
     Vector3 rotation;
     Vector3 halfExtent;
-};
-struct Sphere
+}
+Box;
+typedef struct Sphere
 {
     Vector3 position;
     float radius;
-};
-struct Pose
+}
+Sphere;
+typedef struct Pose
 {
     Vector3 position;
     Vector3 rotation;
-};
+}
+Pose;
 
 inline void PrintFloatHex(float f)
 {
-    unsigned int ui;
-    memcpy(&ui, &f, sizeof (ui));
-    printf("%X", ui);
+    // unsigned int ui;
+    // memcpy(&ui, &f, sizeof (ui));
+    // printf("%X", ui);
 }
 inline void PrintVector2(Vector2 v)
 {
-    cout << "<" << v.x << "," << v.y << ">" << endl;
+    // cout << "<" << v.x << "," << v.y << ">" << endl;
 }
 inline void PrintVector3(Vector3 v)
 {
-    cout << "<" << v.x << "," << v.y << "," << v.z << ">" << endl;
+    // cout << "<" << v.x << "," << v.y << "," << v.z << ">" << endl;
 }
 inline void PrintVector4(Vector4 v)
 {
-    cout << "<" << v.x << "," << v.y << "," << v.z << "," << v.w << ">" << endl;
+    // cout << "<" << v.x << "," << v.y << "," << v.z << "," << v.w << ">" << endl;
 }
 inline void PrintVector2Hex(Vector2 v)
 {
@@ -93,43 +114,43 @@ inline void PrintVector2Hex(Vector2 v)
 }
 inline void PrintMatrix(Matrix m)
 {
-    cout << m.m[0][0] << "," << m.m[0][1] << "," << m.m[0][2] << "," << m.m[0][3] << endl;
-    cout << m.m[1][0] << "," << m.m[1][1] << "," << m.m[1][2] << "," << m.m[1][3] << endl;
-    cout << m.m[2][0] << "," << m.m[2][1] << "," << m.m[2][2] << "," << m.m[2][3] << endl;
-    cout << m.m[3][0] << "," << m.m[3][1] << "," << m.m[3][2] << "," << m.m[3][3] << endl;
+    // cout << m.m[0][0] << "," << m.m[0][1] << "," << m.m[0][2] << "," << m.m[0][3] << endl;
+    // cout << m.m[1][0] << "," << m.m[1][1] << "," << m.m[1][2] << "," << m.m[1][3] << endl;
+    // cout << m.m[2][0] << "," << m.m[2][1] << "," << m.m[2][2] << "," << m.m[2][3] << endl;
+    // cout << m.m[3][0] << "," << m.m[3][1] << "," << m.m[3][2] << "," << m.m[3][3] << endl;
 }
 
-inline int MathSign(float value)
+inline int MathSignFloat(float value)
 {
     if (value > 0) { return  1; }
     if (value < 0) { return -1; }
                      return  0;
 }
-inline int MathSign(int value)
+inline int MathSignInt(int value)
 {
     if (value > 0) { return  1; }
     if (value < 0) { return -1; }
                      return  0;
 }
-inline int MathMin(int v1, int v2)
+inline int MathMinInt(int v1, int v2)
 {
-    return min(v1,v2);
+    return fmin(v1,v2);
 }
-inline int MathMax(int v1, int v2)
+inline int MathMaxInt(int v1, int v2)
 {
-    return max(v1,v2);
+    return fmax(v1,v2);
 }
-inline int MathClamp(int value, int min, int max)
+inline int MathClampInt(int value, int min, int max)
 {
     if (value < min) { return min; };
     if (value > max) { return max; };
                        return value;
 }
-inline float MathMin(float value1, float value2)
+inline float MathMinFloat(float value1, float value2)
 {
     return fminf(value1,value2);
 }
-inline float MathMax(float value1, float value2)
+inline float MathMaxFloat(float value1, float value2)
 {
     return fmaxf(value1,value2);
 }
@@ -141,7 +162,7 @@ inline float MathSqrt(float value)
 {
     return sqrtf(value);
 }
-inline float MathClamp(float value, float min, float max)
+inline float MathClampFloat(float value, float min, float max)
 {
     if (value < min) { return min; };
     if (value > max) { return max; };
@@ -181,29 +202,33 @@ inline float MathToRadians(float degree)
     return _pi_div_180 * degree;
 }
 
+inline Vector2 Vector2Zero()
+{
+    return (Vector2){};
+}
 inline bool Vector2Equal(Vector2 v1, Vector2 v2)
 {
     return v1.x == v2.x && v1.y == v2.y;
 }
 inline Vector2 Vector2Abs(Vector2 v)
 {
-    return { fabs(v.x), fabs(v.y) };
+    return (Vector2){ fabs(v.x), fabs(v.y) };
 }
 inline Vector2 Vector2Add(Vector2 v1, Vector2 v2)
 {
-    return { v1.x + v2.x, v1.y + v2.y };
+    return (Vector2){ v1.x+v2.x, v1.y+v2.y };
 }
 inline Vector2 Vector2Sub(Vector2 v1, Vector2 v2)
 {
-    return { v1.x - v2.x, v1.y - v2.y };
+    return (Vector2){ v1.x-v2.x, v1.y-v2.y };
 }
 inline Vector2 Vector2Mul(Vector2 v1, float value)
 {
-    return { v1.x * value, v1.y * value };
+    return (Vector2){ v1.x*value, v1.y*value };
 }
 inline Vector2 Vector2Div(Vector2 v1, float value)
 {
-    return { v1.x / value, v1.y / value };
+    return (Vector2){ v1.x/value, v1.y/value };
 }
 inline float Vector2Length(Vector2 v)
 {
@@ -225,27 +250,27 @@ inline Vector2 Vector2Normalize(Vector2 v)
     if (length > 0)
         return Vector2Div(v, length);
     else
-        return { 0, 0 };
+        return Vector2Zero();
 }
 inline Vector2 Vector2MoveTowards(Vector2 from, Vector2 target, float delta)
 {
     if (Vector2Equal(from, target)) return from;
-    auto diff = Vector2Sub(target, from);
-    auto dist = Vector2Length(diff);
+    Vector2 diff = Vector2Sub(target, from);
+    float dist = Vector2Length(diff);
     if (dist <= delta) return target;
     diff = Vector2Normalize(diff);
-    auto moveVec = Vector2Mul(diff, delta);
+    Vector2 moveVec = Vector2Mul(diff, delta);
     return Vector2Add(from, moveVec);
 }
-inline Vector2 Vector2MoveTowards(Vector2 from, Vector2 target, float delta, float limit)
+inline Vector2 Vector2MoveTowardsLimit(Vector2 from, Vector2 target, float delta, float limit)
 {
     if (Vector2Equal(from, target)) return from;
-    auto diff = Vector2Sub(target, from);
-    auto dist = Vector2Length(diff);
+    Vector2 diff = Vector2Sub(target, from);
+    float dist = Vector2Length(diff);
     if (dist <= limit) return from;
     if (dist <= delta) return target;
     diff = Vector2Normalize(diff);
-    auto moveVec = Vector2Mul(diff, delta);
+    Vector2 moveVec = Vector2Mul(diff, delta);
     return Vector2Add(from, moveVec);
 }
 
@@ -258,55 +283,55 @@ inline bool Vector3Equal(Vector3 v1, Vector3 v2)
 }
 inline Vector3 Vector3Abs(Vector3 v)
 {
-    return { fabs(v.x), fabs(v.y), fabs(v.z) };
+    return (Vector3){ fabs(v.x), fabs(v.y), fabs(v.z) };
 }
 inline Vector3 Vector3Zero()
 {
-    return { 0, 0, 0 };
+    return (Vector3){};
 }
 inline Vector3 Vector3Left()
 {
-    return { -1, 0, 0 };
+    return (Vector3){ -1, 0, 0 };
 }
 inline Vector3 Vector3Right()
 {
-    return { 1, 0, 0 };
+    return (Vector3){ 1, 0, 0 };
 }
 inline Vector3 Vector3Up()
 {
-    return { 0, 1, 0 };
+    return (Vector3){ 0, 1, 0 };
 }
 inline Vector3 Vector3Down()
 {
-    return { 0, 1, 0 };
+    return (Vector3){ 0, 1, 0 };
 }
 inline Vector3 Vector3Forward()
 {
-    return { 0, 0, 1 };
+    return (Vector3){ 0, 0, 1 };
 }
 inline Vector3 Vector3Backward()
 {
-    return { 0, 0, -1 };
+    return (Vector3){ 0, 0, -1 };
 }
 inline Vector3 Vector3Negative(Vector3 v)
 {
-    return { -v.x, -v.y, -v.z };
+    return (Vector3){ -v.x, -v.y, -v.z };
 }
 inline Vector3 Vector3Add(Vector3 v1, Vector3 v2)
 {
-    return { v1.x+v2.x, v1.y+v2.y, v1.z+v2.z };
+    return (Vector3){ v1.x+v2.x, v1.y+v2.y, v1.z+v2.z };
 }
 inline Vector3 Vector3Subtract(Vector3 v1, Vector3 v2)
 {
-    return { v1.x-v2.x, v1.y-v2.y, v1.z-v2.z };
+    return (Vector3){ v1.x-v2.x, v1.y-v2.y, v1.z-v2.z };
 }
 inline Vector3 Vector3Divide(Vector3 v, float f)
 {
-    return { v.x/f, v.y/f, v.z/f };
+    return (Vector3){ v.x/f, v.y/f, v.z/f };
 }
 inline Vector3 Vector3Multiply(Vector3 v, float f)
 {
-    return { v.x*f, v.y*f, v.z*f };
+    return (Vector3){ v.x*f, v.y*f, v.z*f };
 }
 inline float Vector3Length(Vector3 v)
 {
@@ -322,13 +347,13 @@ inline float Vector3Dot(Vector3 a, Vector3 b)
 }
 inline float Vector3Distance(Vector3 a, Vector3 b)
 {
-    auto diff = Vector3Subtract(a, b);
+    Vector3 diff = Vector3Subtract(a, b);
     return Vector3Length(diff);
 }
 inline Vector3 Vector3ClampLength(Vector3 vector, float min, float max)
 {
-    auto length = Vector3Length(vector);
-    if (length <= 0) return { 0, 0, 0 };
+    float length = Vector3Length(vector);
+    if (length <= 0)  return Vector3Zero();
     if (length > max) return Vector3Multiply(vector, (max / length));
     if (length < min) return Vector3Multiply(vector, (min / length));
     return vector;
@@ -336,12 +361,12 @@ inline Vector3 Vector3ClampLength(Vector3 vector, float min, float max)
 inline Vector3 Vector3Normalize(Vector3 v)
 {
     float length = Vector3Length(v);
-    if (length <= 0) return { 0, 0 };
+    if (length <= 0) return Vector3Zero();
     return Vector3Divide(v, length);
 }
 inline Vector3 Vector3Cross(Vector3 a, Vector3 b)
 {
-    return
+    return (Vector3)
     {
         a.y * b.z - a.z * b.y,
         a.z * b.x - a.x * b.z,
@@ -354,7 +379,7 @@ inline Vector3 Vector3RotateX(Vector3 v, float rot)
     float cos = cosf(rot);
     float y = v.y * ( cos) + v.z * ( sin);
     float z = v.y * (-sin) + v.z * ( cos);
-    return { v.x, y, z };
+    return (Vector3){ v.x, y, z };
 }
 inline Vector3 Vector3RotateY(Vector3 v, float rot)
 {
@@ -362,7 +387,7 @@ inline Vector3 Vector3RotateY(Vector3 v, float rot)
     float cos = cosf(rot);
     float x = v.x * ( cos) + v.z * (-sin);
     float z = v.x * ( sin) + v.z * ( cos);
-    return { x, v.y, z };
+    return (Vector3){ x, v.y, z };
 }
 inline Vector3 Vector3RotateZ(Vector3 v, float rot)
 {
@@ -370,7 +395,7 @@ inline Vector3 Vector3RotateZ(Vector3 v, float rot)
     float cos = cosf(rot);
     float x = v.x * ( cos) + v.y * ( sin);
     float y = v.x * (-sin) + v.y * ( cos);
-    return { x, y, v.z };
+    return (Vector3){ x, y, v.z };
 }
 inline Vector3 Vector3Rotate(Vector3 v, Vector3 rot)
 {
@@ -382,11 +407,11 @@ inline Vector3 Vector3Rotate(Vector3 v, Vector3 rot)
 inline Vector3 Vector3MoveTowards(Vector3 source, Vector3 target, float delta)
 {
     if (Vector3Equal(source, target)) return source;
-    auto diff = Vector3Subtract(target, source);
-    auto dist = Vector3Length(diff);
+    Vector3 diff = Vector3Subtract(target, source);
+    float dist = Vector3Length(diff);
     if (dist <= delta) return target;
     diff = Vector3Normalize(diff);
-    auto moveVec = Vector3Multiply(diff, delta);
+    Vector3 moveVec = Vector3Multiply(diff, delta);
     return Vector3Add(source, moveVec);
 }
 inline Vector3 Vector3MoveTowards2(Vector3 source, Vector3 target, float acc, float deltaTime)
@@ -490,7 +515,7 @@ inline float Vector4Dot(Vector4 a, Vector4 b)
 
 inline Matrix MatrixIdentity()
 {
-    return
+    return (Matrix)
     {
         1,0,0,0,
         0,1,0,0,
@@ -530,19 +555,17 @@ inline Matrix MatrixMultiply(Matrix a, Matrix b)
     float m32 = Vector4Dot(row3,col2);
     float m33 = Vector4Dot(row3,col3);
 
-    Matrix result =
+    return (Matrix)
     {
         m00,m01,m02,m03,
         m10,m11,m12,m13,
         m20,m21,m22,m23,
         m30,m31,m32,m33
     };
-
-    return result;
 }
 inline Matrix MatrixTranspose(Matrix a)
 {
-    return Matrix
+    return (Matrix)
     {
         a.m[0][0],a.m[1][0],a.m[2][0],a.m[3][0],
         a.m[0][1],a.m[1][1],a.m[2][1],a.m[3][1],
@@ -595,7 +618,7 @@ inline Matrix MatrixInvert(Matrix mat)
 }
 inline Matrix MatrixTranslate(Vector3 v)
 {
-    return
+    return (Matrix)
     {
         1, 0, 0, 0,
         0, 1, 0, 0,
@@ -607,7 +630,7 @@ inline Matrix MatrixRotateX(float rad)
 {
     float sin = sinf(rad);
     float cos = cosf(rad);
-    return
+    return (Matrix)
     {
         1,   0,    0,    0,
         0,   cos, -sin,  0,
@@ -619,7 +642,7 @@ inline Matrix MatrixRotateY(float rad)
 {
     float sin = sinf(rad);
     float cos = cosf(rad);
-    return
+    return (Matrix)
     {
          cos,   0,  sin,   0,
            0,   1,    0,   0,
@@ -631,7 +654,7 @@ inline Matrix MatrixRotateZ(float rad)
 {
     float sin = sinf(rad);
     float cos = cosf(rad);
-    return
+    return (Matrix)
     {
         cos, -sin,  0,   0,
         sin,  cos,  0,   0,
@@ -655,7 +678,7 @@ inline Matrix MatrixScale(Vector3 scale)
     float x = scale.x;
     float y = scale.y;
     float z = scale.z;
-    return
+    return (Matrix)
     {
         x, 0, 0, 0,
         0, y, 0, 0,
@@ -673,11 +696,11 @@ inline Matrix MatrixWorld(Vector3 position, Vector3 direction)
 
     Vector3 yAxis = Vector3Cross(zAxis, xAxis);
 
-    auto x = position.x;
-    auto y = position.y;
-    auto z = position.z;
+    float x = position.x;
+    float y = position.y;
+    float z = position.z;
 
-    return
+    return (Matrix)
     {
         xAxis.x, xAxis.y, xAxis.z, 0.0f,
         yAxis.x, yAxis.y, yAxis.z, 0.0f,
@@ -685,7 +708,7 @@ inline Matrix MatrixWorld(Vector3 position, Vector3 direction)
               x,       y,       z, 1.0f
     };
 }
-inline Matrix MatrixWorld(Vector3 position, Vector3 rotation, Vector3 scale)
+inline Matrix MatrixWorld2(Vector3 position, Vector3 rotation, Vector3 scale)
 {
     Matrix result;
     Matrix mat1 = MatrixScale(scale);
@@ -709,7 +732,7 @@ inline Matrix MatrixView(Vector3 eye, float yaw, float pitch)
     result = MatrixMultiply(result, mat3);
     return result;
 }
-inline Matrix MatrixView(Vector3 eye, Vector3 target, Vector3 up)
+inline Matrix MatrixView2(Vector3 eye, Vector3 target, Vector3 up)
 {
     Vector3 zAxis = Vector3Subtract(target, eye);
             zAxis = Vector3Normalize(zAxis);
@@ -719,11 +742,11 @@ inline Matrix MatrixView(Vector3 eye, Vector3 target, Vector3 up)
 
     Vector3 yAxis = Vector3Cross(zAxis, xAxis);
 
-    auto x = -Vector3Dot(xAxis, eye);
-    auto y = -Vector3Dot(yAxis, eye);
-    auto z = -Vector3Dot(zAxis, eye);
+    float x = -Vector3Dot(xAxis, eye);
+    float y = -Vector3Dot(yAxis, eye);
+    float z = -Vector3Dot(zAxis, eye);
 
-    return
+    return (Matrix)
     {
         xAxis.x, xAxis.y, xAxis.z, 0.0f,
         yAxis.x, yAxis.y, yAxis.z, 0.0f,
@@ -731,9 +754,9 @@ inline Matrix MatrixView(Vector3 eye, Vector3 target, Vector3 up)
               x,       y,       z, 1.0f
     };
 }
-inline Matrix MatrixView(const Camera* camera)
+inline Matrix MatrixView3(const Camera* camera)
 {
-    return MatrixView(camera->position,camera->yaw,camera->pitch);
+    return MatrixView(camera->position, camera->yaw, camera->pitch);
 }
 inline Matrix MatrixOrthographic(float width, float height, float zNear, float zFar)
 {
@@ -741,7 +764,7 @@ inline Matrix MatrixOrthographic(float width, float height, float zNear, float z
     float h = 2.0f / height;
     float a = 1.0f / (zFar - zNear);
     float b = a * -zNear;
-    return
+    return (Matrix)
     {
         w, 0, 0, 0,
         0, h, 0, 0,
@@ -757,7 +780,7 @@ inline Matrix MatrixPerspective(float width, float height, float zNear, float zF
     float w = h / aspectRatio;
     float a = zFar / (zFar - zNear);
     float b = a * -zNear;
-    return
+    return (Matrix)
     {
         w, 0, 0, 0,
         0, h, 0, 0,
@@ -794,9 +817,9 @@ inline Vector4 ToQuaternion(Vector3 e)
 {
     Vector4 result;
 
-    auto pitch = e.x /= 2;
-    auto yaw   = e.y /= 2;
-    auto roll  = e.z /= 2;
+    float pitch = e.x /= 2;
+    float yaw   = e.y /= 2;
+    float roll  = e.z /= 2;
 
     float x0 = cosf(pitch);
     float x1 = sinf(pitch);
@@ -815,9 +838,9 @@ inline Vector4 ToQuaternion(Vector3 e)
 
 inline bool Vector3TriangleIsClockwise(Vector3 p1, Vector3 p2, Vector3 p3)
 {
-    auto v1 = Vector3Subtract(p2, p1);
-    auto v2 = Vector3Subtract(p3, p1);
-    auto crossZ = v1.x * v2.y - v1.y * v2.x;
+    Vector3 v1 = Vector3Subtract(p2, p1);
+    Vector3 v2 = Vector3Subtract(p3, p1);
+    float crossZ = v1.x * v2.y - v1.y * v2.x;
     return crossZ < 0;
 }
 
@@ -869,7 +892,7 @@ inline void UpdateCameraRotation(Camera* camera, float deltaTime, bool left, boo
     if (camera->pitch >  degree) camera->pitch =  degree;
     if (camera->pitch < -degree) camera->pitch = -degree;
 }
-inline void UpdateCameraRotation(Camera* camera, float rotX, float rotY)
+inline void UpdateCameraRotation2(Camera* camera, float rotX, float rotY)
 {
     // inverses horizontal rotation when upsidedown
     // makes movement easy
@@ -882,14 +905,14 @@ inline void UpdateCameraRotation(Camera* camera, float rotX, float rotY)
 }
 inline void UpdateCameraPosition(Camera* camera, float deltaTime, bool w, bool a, bool s, bool d, bool e, bool q)
 {
-    Matrix matrix = MatrixView(camera);
+    Matrix matrix = MatrixView3(camera);
 
     Vector3 forward = { matrix.m[0][2], matrix.m[1][2], matrix.m[2][2] };
     Vector3 up = Vector3Up();
     Vector3 right = Vector3Cross(up,forward);
 
-    auto speed = 50.0f;
-    auto speedDelta = speed * deltaTime;
+    float speed = 50.0f;
+    float speedDelta = speed * deltaTime;
 
     forward = Vector3Multiply(forward, speedDelta);
     right   = Vector3Multiply(right, speedDelta);
@@ -902,7 +925,7 @@ inline void UpdateCameraPosition(Camera* camera, float deltaTime, bool w, bool a
     if (e) camera->position = Vector3Add      (camera->position, up);
     if (q) camera->position = Vector3Subtract (camera->position, up);
 }
-inline void UpdateCameraPosition(Camera* camera, Vector3 move)
+inline void UpdateCameraPosition2(Camera* camera, Vector3 move)
 {
     Vector3 forward = GetAxisZ(camera);
     Vector3 up = GetAxisY(camera);
@@ -910,31 +933,31 @@ inline void UpdateCameraPosition(Camera* camera, Vector3 move)
     right = Vector3Normalize(right);
     up = Vector3Cross(forward, right);
 
-    forward = { forward.x*move.z, forward.y*move.z, forward.z*move.z };
-    up = { up.x*move.y, up.y*move.y, up.z*move.y };
-    right = { right.x*move.x, right.y*move.x, right.z*move.x };
+    forward = (Vector3){ forward.x * move.z, forward.y * move.z, forward.z * move.z };
+    up      = (Vector3){ up.x      * move.y, up.y      * move.y, up.z      * move.y };
+    right   = (Vector3){ right.x   * move.x, right.y   * move.x, right.z   * move.x };
 
     camera->position = Vector3Add(camera->position, forward)    ;
     camera->position = Vector3Add(camera->position, up);
     camera->position = Vector3Add(camera->position, right);
 }
 
-inline void UpdateCameraFpsRotation(Camera& camera, Vector2 rot)
+inline void UpdateCameraFpsRotation(Camera* camera, Vector2 rot)
 {
-    camera.yaw += rot.x;
-    camera.pitch += rot.y;
+    camera->yaw += rot.x;
+    camera->pitch += rot.y;
 
     // maybe bigger angle?
     // camera.pitch = MathClamp(camera.pitch, MathToRadians(-120.0f), MathToRadians(120.0f));
 
-    camera.pitch = MathClamp(camera.pitch, MathToRadians(-90.0f), MathToRadians(90.0f));
+    camera->pitch = MathClampFloat(camera->pitch, MathToRadians(-90.0f), MathToRadians(90.0f));
 }
-inline void UpdateCameraFpsMovement(Camera& camera, Vector2 move)
+inline void UpdateCameraFpsMovement(Camera* camera, Vector2 move)
 {
     Vector3 up = { 0, 1, 0 };
     Vector3 forward = { 0, 0, 1 };
 
-    forward = Vector3RotateY(forward, -camera.yaw);
+    forward = Vector3RotateY(forward, -camera->yaw);
 
     Vector3 right = Vector3Cross(up, forward);
 
@@ -943,10 +966,10 @@ inline void UpdateCameraFpsMovement(Camera& camera, Vector2 move)
     right.x *= move.x;
     right.z *= move.x;
 
-    camera.position = Vector3Add(camera.position, forward);
-    camera.position = Vector3Add(camera.position, right);
+    camera->position = Vector3Add(camera->position, forward);
+    camera->position = Vector3Add(camera->position, right);
 }
-inline void UpdateCameraFps(Camera& camera, Vector2 move, Vector2 rot)
+inline void UpdateCameraFps(Camera* camera, Vector2 move, Vector2 rot)
 {
     UpdateCameraFpsRotation(camera, rot);
     UpdateCameraFpsMovement(camera, move);
@@ -984,35 +1007,35 @@ inline Vector3 BoundSize(const Bound* bound)
     result.z = MathAbs(result.z);
     return result;
 }
-inline Vector3 BoundCenter(const Bound& bound)
+inline Vector3 BoundCenter(const Bound* bound)
 {
     Vector3 result;
-    result = Vector3Add(bound.p0, bound.p1);
+    result = Vector3Add(bound->p0, bound->p1);
     result = Vector3Divide(result, 2);
     return result;
 }
 
 inline Vector3 RandomPointInside(Subgen* subgen, Bound* bound)
 {
-    float x = SubgenRange(subgen, BoundMinX(bound), BoundMaxX(bound) );
-    float y = SubgenRange(subgen, BoundMinY(bound), BoundMaxY(bound) );
-    float z = SubgenRange(subgen, BoundMinZ(bound), BoundMaxZ(bound) );
-    return { x, y, z };
+    float x = SubgenRange(subgen, BoundMinX(bound), BoundMaxX(bound));
+    float y = SubgenRange(subgen, BoundMinY(bound), BoundMaxY(bound));
+    float z = SubgenRange(subgen, BoundMinZ(bound), BoundMaxZ(bound));
+    return (Vector3){ x, y, z };
 }
 inline Vector3 RandomPointTopFace(Subgen* subgen, Bound* bound)
 {
-    auto maxY = BoundMaxY(bound);
+    float maxY = BoundMaxY(bound);
 
-    auto minX = BoundMinX(bound);
-    auto maxX = BoundMaxX(bound);
+    float minX = BoundMinX(bound);
+    float maxX = BoundMaxX(bound);
 
-    auto minZ = BoundMinZ(bound);
-    auto maxZ = BoundMaxZ(bound);
+    float minZ = BoundMinZ(bound);
+    float maxZ = BoundMaxZ(bound);
 
-    auto randX = SubgenRange(subgen, minX, maxX);
-    auto randZ = SubgenRange(subgen, minZ, maxZ);
+    float randX = SubgenRange(subgen, minX, maxX);
+    float randZ = SubgenRange(subgen, minZ, maxZ);
 
-    return { randX, maxY, randZ };
+    return (Vector3){ randX, maxY, randZ };
 }
 inline Vector3 WrapAround(Bound* bound, Vector3 point)
 {
@@ -1027,7 +1050,7 @@ inline Vector3 WrapAround(Bound* bound, Vector3 point)
 }
 inline Vector3 BoundShortPathIn(Bound* aabb, Vector3 point)
 {
-    auto result = Vector3Zero();
+    Vector3 result = Vector3Zero();
     if      (point.x < BoundMinX(aabb)) result.x = BoundMinX(aabb) - point.x;
     else if (point.x > BoundMaxX(aabb)) result.x = BoundMaxX(aabb) - point.x;
     if      (point.y < BoundMinY(aabb)) result.y = BoundMinY(aabb) - point.y;
@@ -1035,6 +1058,151 @@ inline Vector3 BoundShortPathIn(Bound* aabb, Vector3 point)
     if      (point.z < BoundMinZ(aabb)) result.z = BoundMinZ(aabb) - point.z;
     else if (point.z > BoundMaxZ(aabb)) result.z = BoundMaxZ(aabb) - point.z;
     return result;
+}
+
+inline bool InsideSphere(Vector3 point, Sphere sphere)
+{
+    Vector3 diff = Vector3Subtract(point, sphere.position);
+    return Vector3LengthSquared(diff) <= sphere.radius * sphere.radius;
+}
+inline bool RaycastFull1(Vector3 origin, Vector3 dirNorm, Sphere sphere)
+{
+    // TODO must be tested
+
+    Vector3 v1 = Vector3Subtract(sphere.position, origin);
+    float v2Length = Vector3Dot(dirNorm, v1);
+    Vector3 v2 = Vector3Multiply(dirNorm, v2Length);
+    Vector3 v3 = Vector3Subtract(v2, v1);
+    float v3LengthSquared = Vector3LengthSquared(v3);
+    float radiusSquared = sphere.radius * sphere.radius;
+
+    // no intersection
+    if (v3LengthSquared > radiusSquared) return false;
+
+    float offset = MathSqrt(radiusSquared - v3LengthSquared);
+
+    float dist1 = v2Length - offset;
+    float dist2 = v2Length + offset;
+
+    Vector3 point1 = Vector3Add(origin, Vector3Multiply(dirNorm, dist1));
+    Vector3 point2 = Vector3Add(origin, Vector3Multiply(dirNorm, dist2));
+
+    Vector3 normal1 = Vector3Subtract(point1, sphere.position);
+    Vector3 normal2 = Vector3Subtract(point2, sphere.position);
+
+    normal1 = Vector3Normalize(normal1);
+    normal2 = Vector3Normalize(normal2);
+
+    return true;
+}
+inline bool RaycastFull2(Vector3 origin, Vector3 dirNorm, Sphere sphere)
+{
+    // TODO must be tested
+
+    Vector3 diff = Vector3Subtract(origin, sphere.position);
+    float b = Vector3Dot(dirNorm, diff) * 2;
+    float c = Vector3LengthSquared(diff) - (sphere.radius * sphere.radius);
+    float deltaSquared = b * b - 4 * c;
+
+    // no intersection
+    if (deltaSquared < 0) return false;
+
+    float delta = MathSqrt(deltaSquared);
+
+    float dist1 = (-b - delta) / 2;
+    float dist2 = (-b + delta) / 2;
+
+    Vector3 point1 = Vector3Add(origin, Vector3Multiply(dirNorm, dist1));
+    Vector3 point2 = Vector3Add(origin, Vector3Multiply(dirNorm, dist2));
+
+    Vector3 normal1 = Vector3Subtract(point1, sphere.position);
+    Vector3 normal2 = Vector3Subtract(point2, sphere.position);
+
+    normal1 = Vector3Normalize(normal1);
+    normal2 = Vector3Normalize(normal2);
+
+    return true;
+}
+inline bool Raycast(Vector3 origin, Vector3 dirNorm, Sphere sphere, float* outDistance, Vector3* outPoint, Vector3* outNormal)
+{
+    // TODO must be tested
+    // Assuming the origin is outside the sphere
+
+    Vector3 v1 = Vector3Subtract(sphere.position, origin);
+    float v2Length = Vector3Dot(dirNorm, v1);
+
+    // sphere is behind
+    if (v2Length < 0) return false;
+
+    Vector3 v2 = Vector3Multiply(dirNorm, v2Length);
+    Vector3 v3 = Vector3Subtract(v2, v1);
+    float v3LengthSquared = Vector3LengthSquared(v3);
+    float radiusSquared = sphere.radius * sphere.radius;
+
+    // no intersection
+    if (v3LengthSquared > radiusSquared) return false;
+
+    float offset = MathSqrt(radiusSquared - v3LengthSquared);
+    float dist = v2Length - offset;
+    Vector3 point = Vector3Add(origin, Vector3Multiply(dirNorm, dist));
+    Vector3 normal = Vector3Subtract(point, sphere.position);
+    normal = Vector3Normalize(normal);
+
+    *outDistance = dist;
+    *outPoint = point;
+    *outNormal = normal;
+
+    return true;
+}
+inline bool LineSegmentIntersection(Vector3 start, Vector3 end, Sphere sphere)
+{
+    // TODO must be tested
+
+    Vector3 origin = start;
+    Vector3 dir = Vector3Subtract(end, start);
+    Vector3 dirNorm = Vector3Normalize(dir);
+
+    Vector3 v1 = Vector3Subtract(sphere.position, origin);
+    float v2Length = Vector3Dot(dirNorm, v1);
+    Vector3 v2 = Vector3Multiply(dirNorm, v2Length);
+    Vector3 v3 = Vector3Subtract(v2, v1);
+    float v3LengthSquared = Vector3LengthSquared(v3);
+    float radiusSquared = sphere.radius * sphere.radius;
+
+    // no intersection
+    if (v3LengthSquared > radiusSquared) return false;
+
+    float offset = MathSqrt(radiusSquared - v3LengthSquared);
+    float dist1 = v2Length - offset;
+    float dist2 = v2Length + offset;
+    float maxDist = MathMaxFloat(dist1, dist2);
+
+    // all points behind
+    if (maxDist < 0) return false;
+
+    // segment is short
+    if (Vector3LengthSquared(dir) < maxDist * maxDist) return false;
+
+    return true;
+}
+
+inline Pose GetLocalPose(Pose parentWorld, Pose childWorld)
+{
+    childWorld.rotation = Vector3Subtract(childWorld.rotation, parentWorld.rotation);
+    childWorld.position = Vector3Subtract(childWorld.position, parentWorld.position);
+    childWorld.position = Vector3RotateZ(childWorld.position, -parentWorld.rotation.z);
+    childWorld.position = Vector3RotateY(childWorld.position, -parentWorld.rotation.y);
+    childWorld.position = Vector3RotateX(childWorld.position, -parentWorld.rotation.x);
+    return childWorld;
+}
+inline Pose GetWorldPose(Pose parentWorld, Pose childLocal)
+{
+    childLocal.position = Vector3RotateX(childLocal.position, parentWorld.rotation.x);
+    childLocal.position = Vector3RotateY(childLocal.position, parentWorld.rotation.y);
+    childLocal.position = Vector3RotateZ(childLocal.position, parentWorld.rotation.z);
+    childLocal.position = Vector3Add(childLocal.position, parentWorld.position);
+    childLocal.rotation = Vector3Add(childLocal.rotation, parentWorld.rotation);
+    return childLocal;
 }
 
 inline Vector2 operator -  (Vector2 left, Vector2 right)
@@ -1190,147 +1358,4 @@ inline Matrix operator * (Matrix left, Matrix right)
     return MatrixMultiply(left, right);
 }
 
-inline bool InsideSphere(Vector3 point, Sphere sphere)
-{
-    auto diff = Vector3Subtract(point, sphere.position);
-    return Vector3LengthSquared(diff) <= sphere.radius * sphere.radius;
-}
-inline bool RaycastFull1(Vector3 origin, Vector3 dirNorm, Sphere sphere)
-{
-    // TODO must be tested
-
-    auto v1 = sphere.position - origin;
-    auto v2Length = Vector3Dot(dirNorm, v1);
-    auto v2 = dirNorm * v2Length;
-    auto v3 = v2 - v1;
-    auto v3LengthSquared = Vector3LengthSquared(v3);
-    auto radiusSquared = sphere.radius * sphere.radius;
-
-    // no intersection
-    if (v3LengthSquared > radiusSquared) return false;
-
-    auto offset = MathSqrt(radiusSquared - v3LengthSquared);
-
-    auto dist1 = v2Length - offset;
-    auto dist2 = v2Length + offset;
-
-    auto point1 = origin + dirNorm * dist1;
-    auto point2 = origin + dirNorm * dist2;
-
-    auto normal1 = point1 - sphere.position;
-    auto normal2 = point2 - sphere.position;
-
-    normal1 = Vector3Normalize(normal1);
-    normal2 = Vector3Normalize(normal2);
-
-    return true;
-}
-inline bool RaycastFull2(Vector3 origin, Vector3 dirNorm, Sphere sphere)
-{
-    // TODO must be tested
-
-    auto diff = origin - sphere.position;
-    auto b = Vector3Dot(dirNorm, diff) * 2;
-    auto c = Vector3LengthSquared(diff) - (sphere.radius * sphere.radius);
-    auto deltaSquared = b * b - 4 * c;
-
-    // no intersection
-    if (deltaSquared < 0) return false;
-
-    auto delta = MathSqrt(deltaSquared);
-
-    auto dist1 = (-b - delta) / 2;
-    auto dist2 = (-b + delta) / 2;
-
-    auto point1 = origin + dirNorm * dist1;
-    auto point2 = origin + dirNorm * dist2;
-
-    auto normal1 = point1 - sphere.position;
-    auto normal2 = point2 - sphere.position;
-
-    normal1 = Vector3Normalize(normal1);
-    normal2 = Vector3Normalize(normal2);
-
-    return true;
-}
-inline bool Raycast(Vector3 origin, Vector3 dirNorm, Sphere sphere, float* outDistance, Vector3* outPoint, Vector3* outNormal)
-{
-    // TODO must be tested
-    // Assuming the origin is outside the sphere
-
-    auto v1 = sphere.position - origin;
-    auto v2Length = Vector3Dot(dirNorm, v1);
-
-    // sphere is behind
-    if (v2Length < 0) return false;
-
-    auto v2 = dirNorm * v2Length;
-    auto v3 = v2 - v1;
-    auto v3LengthSquared = Vector3LengthSquared(v3);
-    auto radiusSquared = sphere.radius * sphere.radius;
-
-    // no intersection
-    if (v3LengthSquared > radiusSquared) return false;
-
-    auto offset = MathSqrt(radiusSquared - v3LengthSquared);
-    auto dist = v2Length - offset;
-    auto point = origin + dirNorm * dist;
-    auto normal = point - sphere.position;
-    normal = Vector3Normalize(normal);
-
-    *outDistance = dist;
-    *outPoint = point;
-    *outNormal = normal;
-
-    return true;
-}
-inline bool LineSegmentIntersection(Vector3 start, Vector3 end, Sphere sphere)
-{
-    // TODO must be tested
-
-    auto origin = start;
-    auto dir = end - start;
-    auto dirNorm = Vector3Normalize(dir);
-
-    auto v1 = sphere.position - origin;
-    auto v2Length = Vector3Dot(dirNorm, v1);
-    auto v2 = dirNorm * v2Length;
-    auto v3 = v2 - v1;
-    auto v3LengthSquared = Vector3LengthSquared(v3);
-    auto radiusSquared = sphere.radius * sphere.radius;
-
-    // no intersection
-    if (v3LengthSquared > radiusSquared) return false;
-
-    auto offset = MathSqrt(radiusSquared - v3LengthSquared);
-    auto dist1 = v2Length - offset;
-    auto dist2 = v2Length + offset;
-    auto maxDist = MathMax(dist1, dist2);
-
-    // all points behind
-    if (maxDist < 0) return false;
-
-    // segment is short
-    if (Vector3LengthSquared(dir) < maxDist * maxDist) return false;
-
-    return true;
-}
-
-inline Pose GetLocalPose(Pose parentWorld, Pose childWorld)
-{
-    childWorld.rotation -= parentWorld.rotation;
-    childWorld.position -= parentWorld.position;
-    childWorld.position = Vector3RotateZ(childWorld.position, -parentWorld.rotation.z);
-    childWorld.position = Vector3RotateY(childWorld.position, -parentWorld.rotation.y);
-    childWorld.position = Vector3RotateX(childWorld.position, -parentWorld.rotation.x);
-    return childWorld;
-}
-inline Pose GetWorldPose(Pose parentWorld, Pose childLocal)
-{
-    childLocal.position = Vector3RotateX(childLocal.position, parentWorld.rotation.x);
-    childLocal.position = Vector3RotateY(childLocal.position, parentWorld.rotation.y);
-    childLocal.position = Vector3RotateZ(childLocal.position, parentWorld.rotation.z);
-    childLocal.position += parentWorld.position;
-    childLocal.rotation += parentWorld.rotation;
-    return childLocal;
-}
+#endif
