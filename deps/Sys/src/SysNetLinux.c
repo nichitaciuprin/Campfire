@@ -66,6 +66,18 @@ static void RecvMessage(SOCKET sock, SOCKADDR* addr, char* buffer, int* messageS
 
 static SOCKET netsock;
 
+uint64_t NetCreateAddr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint16_t port)
+{
+    uint64_t ip = 0;
+
+    ip += b1; ip = ip <<  8;
+    ip += b2; ip = ip <<  8;
+    ip += b3; ip = ip <<  8;
+    ip += b4; ip = ip << 16;
+    ip += port;
+
+    return ip;
+}
 void NetPrintAddrAsHex(uint64_t addr)
 {
     for (size_t i = 0; i < 6; i++)
@@ -84,18 +96,6 @@ void NetPrintAddr(uint64_t addr)
     { uint8_t byte = addr >> 8 * (5 - 3); int byte2 = byte; printf("%i", byte2); } printf(":");
 
     { uint16_t port = addr; printf("%i", port); }
-}
-uint64_t NetCreateAddr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint16_t port)
-{
-    uint64_t ip = 0;
-
-    ip += b1; ip = ip <<  8;
-    ip += b2; ip = ip <<  8;
-    ip += b3; ip = ip <<  8;
-    ip += b4; ip = ip << 16;
-    ip += port;
-
-    return ip;
 }
 
 void NetUseAnyPort()

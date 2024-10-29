@@ -3,9 +3,9 @@
 
 #include <stdint.h>
 
+uint64_t NetCreateAddr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint16_t port);
 void NetPrintAddr(uint64_t addr);
 void NetPrintAddrAsHex(uint64_t addr);
-uint64_t NetCreateAddr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint16_t port);
 
 void NetUseAnyPort();
 void NetUsePort(int port);

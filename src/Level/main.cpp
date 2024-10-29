@@ -1,11 +1,12 @@
 #include "BaseExt.h"
 #include "SysHelper.h"
 #include "Subgen.h"
-#include "Helper.h"
+#include "HelperExt.h"
 #include "Models.h"
 #include "Clipping.h"
 #include "Bitmap.h"
 #include "SysWindow.h"
+#include "Window.h"
 #include "SysNet.h"
 
 void Draw(Bitmap& bitmap, Camera camera, long time)
