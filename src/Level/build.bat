@@ -17,18 +17,19 @@ set build=%batdir%build
 
 set flags=-g3 -Og -Werror -Wall -std=c++17 -Wno-missing-braces -pthread -m64
 
-set lib=
-set lib=%lib% -lWs2_32
-
-set include=
-set include=%include% -I%deps%\Base\include
-set include=%include% -I%deps%\Sys\include
-set include=%include% -I%~dp0src
-
 set src=
 set src=%src% %deps%\Sys\src\SysHelper.c
 set src=%src% %deps%\Sys\src\SysWindow.c
 set src=%src% %deps%\Sys\src\SysNet.c
+
+set include=
+set include=%include% -I%deps%\Sys\include
+set include=%include% -I%deps%\Base\include
+set include=%include% -I%~dp0src
+
+set lib=
+set lib=%lib% -lgdi32
+set lib=%lib% -lWs2_32
 
 if exist %build% rmdir /S /Q %build%
    mkdir %build%
