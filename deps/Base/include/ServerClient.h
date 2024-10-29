@@ -100,9 +100,9 @@ void NetSendInput(NetInput* input)
     // if (input->a) message += 1;
 
     // TODO
-    // uint64_t addr = NetCreateAddr(127, 0, 0, 1, 27015);
+    uint64_t addr = NetCreateAddr(127, 0, 0, 1, 27015);
     // uint64_t addr = NetCreateAddr(89, 28, 87, 65, 27015);     // machine2
-    uint64_t addr = NetCreateAddr(20, 215, 34, 35, 27015);    // azure
+    // uint64_t addr = NetCreateAddr(20, 215, 34, 35, 27015);    // azure
     // uint64_t addr = NetCreateAddr(168, 100, 238, 173, 27015); // shells
 
     int messageSize = 2;
