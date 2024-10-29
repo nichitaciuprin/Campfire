@@ -1,3 +1,8 @@
+#ifndef SYSWINDOW_H
+#define SYSWINDOW_H
+
+#include <stdint.h>
+
 typedef struct BitmapWindow BitmapWindow;
 BitmapWindow* BitmapWindow_Create(int x, int y, int clientWidth, int clientHeight);
 bool BitmapWindow_Exists(BitmapWindow* instance);
@@ -21,41 +26,14 @@ bool BitmapWindow_KeyDown_RIGHT(BitmapWindow* instance);
 class BitmapWindow2
 {
 public:
-    BitmapWindow2(int x, int y, int clientWidth, int clientHeight)
-    {
-        instance = BitmapWindow_Create(x, y, clientWidth, clientHeight);
-    }
-    ~BitmapWindow2()
-    {
-        BitmapWindow_Destroy(instance);
-    }
-
-    bool Exists() const
-    {
-        return BitmapWindow_Exists(instance);
-    }
-    void Update()
-    {
-        BitmapWindow_Update(instance);
-    }
-
-    void SetPixel(int x, int y, uint32_t pixel)
-    {
-        BitmapWindow_SetPixel(instance, x, y, pixel);
-    }
-    void SetPixels(uint32_t* pixels, int width, int height)
-    {
-        BitmapWindow_SetPixels(instance, pixels, width, height);
-    }
-    void SetPixelsScaled(uint32_t* pixels, int width, int height, int scale)
-    {
-        BitmapWindow_SetPixelsScaled(instance, pixels, width, height, scale);
-    }
-    void SetPixelsScaled2(uint8_t* pixels, int width, int height, int scale)
-    {
-        BitmapWindow_SetPixelsScaled2(instance, pixels, width, height, scale);
-    }
-
+    BitmapWindow2(int x, int y, int clientWidth, int clientHeight) { instance = BitmapWindow_Create(x, y, clientWidth, clientHeight); }
+    ~BitmapWindow2() { BitmapWindow_Destroy(instance); }
+    bool Exists() const { return BitmapWindow_Exists(instance); }
+    void Update() { BitmapWindow_Update(instance); }
+    void SetPixel(int x, int y, uint32_t pixel) { BitmapWindow_SetPixel(instance, x, y, pixel); }
+    void SetPixels(uint32_t* pixels, int width, int height) { BitmapWindow_SetPixels(instance, pixels, width, height); }
+    void SetPixelsScaled(uint32_t* pixels, int width, int height, int scale) { BitmapWindow_SetPixelsScaled(instance, pixels, width, height, scale); }
+    void SetPixelsScaled2(uint8_t* pixels, int width, int height, int scale) { BitmapWindow_SetPixelsScaled2(instance, pixels, width, height, scale); }
     bool KeyDown_W() { return BitmapWindow_KeyDown_W(instance); };
     bool KeyDown_A() { return BitmapWindow_KeyDown_A(instance); };
     bool KeyDown_S() { return BitmapWindow_KeyDown_S(instance); };
@@ -70,3 +48,5 @@ public:
 private:
     BitmapWindow* instance;
 };
+
+#endif

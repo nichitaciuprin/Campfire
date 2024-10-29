@@ -9,6 +9,9 @@
 #include "Models.h"
 #include "Clipping.h"
 #include "Bitmap.h"
+
+#include "ServerClient.h"
+
 #include "Server.h"
 
 int main()

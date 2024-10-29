@@ -1,3 +1,26 @@
+#ifndef BASEEXT_H
+#define BASEEXT_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <memory.h>
+#include <time.h>
+#include <math.h>
+
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <memory>
+#include <vector>
+#include <array>
+#include <set>
+#include <unordered_set>
+#include <forward_list>
+
+using namespace std;
+
 template <typename T>
 void erase_back(vector<T>& v, size_t i)
 {
@@ -32,3 +55,5 @@ bool try_remove(vector<T>& v, T item)
     }
     return false;
 }
+
+#endif

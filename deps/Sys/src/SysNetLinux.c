@@ -1,3 +1,5 @@
+#include "SysNet.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -138,9 +140,7 @@ void NetSend(uint64_t* addr, char* buffer, int* messageSize)
     // cout << ((int)sockAddrIn.sin_addr.S_un.S_un_b.s_b4) << endl;
 
     // char* ip = inet_ntoa(sockAddrIn.sin_addr);
-    // // cout << ip << endl;
-    // printf(ip);
-    // printf("\n");
+    // cout << ip << endl;
 
     SOCKADDR* sockAddr = (SOCKADDR*)&sockAddrIn;
     int sockAddrSize = (sizeof(*sockAddr));

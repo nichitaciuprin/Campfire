@@ -1,3 +1,5 @@
+#include "SysHelper.h"
+
 #include <stdint.h>
 #include <process.h>
 #include <time.h>

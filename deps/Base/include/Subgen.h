@@ -11,7 +11,7 @@ typedef struct Subgen
 }
 Subgen;
 
-int SubgenNext(Subgen* subgen)
+inline int SubgenNext(Subgen* subgen)
 {
 	if (!subgen->si--) subgen->si = 54;
 	if (!subgen->sj--) subgen->sj = 54;
@@ -19,7 +19,7 @@ int SubgenNext(Subgen* subgen)
 	if (x < 0) x += SUBGENMAX;
 	return subgen->state[subgen->si] = x;
 }
-Subgen SubgenCreate(int seed)
+inline Subgen SubgenCreate(int seed)
 {
     Subgen subgen;
 
@@ -44,15 +44,15 @@ Subgen SubgenCreate(int seed)
 
     return subgen;
 }
-float SubgenFractionUnsigned(Subgen* subgen)
+inline float SubgenFractionUnsigned(Subgen* subgen)
 {
     return SubgenNext(subgen) / (float)SUBGENMAX;
 }
-float SubgenFractionSigned(Subgen* subgen)
+inline float SubgenFractionSigned(Subgen* subgen)
 {
     return SubgenFractionUnsigned(subgen) * 2 - 1;
 }
-float SubgenRange(Subgen* subgen, float min, float max)
+inline float SubgenRange(Subgen* subgen, float min, float max)
 {
     return min + ((max - min) * SubgenFractionUnsigned(subgen));
 }

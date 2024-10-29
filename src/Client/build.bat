@@ -17,10 +17,8 @@ set build=%batdir%build
 
 set flags=-g3 -Og -Werror -Wall -std=c++17 -Wno-missing-braces -pthread -m64
 
-set lib=
-set lib=%lib% -L%deps%\raylib\lib -lraylib -lgdi32 -lwinmm
-set lib=%lib% -L%deps%\ReactPhysics3D\lib -lreactphysics3d
-set lib=%lib% -lWs2_32
+@REM set lib=
+@REM set lib=%lib% -lWs2_32
 
 set include=
 set include=%include% -I%deps%\Base\include
@@ -35,4 +33,4 @@ set src=%src% %deps%\Sys\src\SysNet.c
 if exist %build% rmdir /S /Q %build%
    mkdir %build%
 
-g++ main.cpp %src% -o build/CampfireClient.exe %flags% %include% %lib%
+g++ main.cpp %src% -o build/CampfireClient.exe %flags% %include% %lib% -lgdi32 -lwinmm -lWs2_32
