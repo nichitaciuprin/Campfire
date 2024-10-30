@@ -1,14 +1,6 @@
-#include "SysHelper.h"
-#include "SysWindow.h"
-#include "SysNet.h"
-
 #include "BaseExt.h"
-#include "Subgen.h"
-#include "Helper.h"
-#include "Models.h"
-#include "Clipping.h"
-#include "Bitmap.h"
-
+#include "SysHelper.h"
+#include "Window.h"
 #include "ServerClient.h"
 
 int main()

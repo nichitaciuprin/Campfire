@@ -17,13 +17,13 @@ static void NetInitServer()
 
     SysNetUsePort(27015);
 }
-void SysNetSendFrame(uint64_t* addr, char* frame)
+inline void SysNetSendFrame(uint64_t* addr, char* frame)
 {
     NetInitServer();
     int messageSize = 1024;
     SysNetSend(addr, frame, &messageSize);
 }
-bool SysNetRecvInput(uint64_t* addr, NetInput* input)
+inline bool SysNetRecvInput(uint64_t* addr, NetInput* input)
 {
     NetInitServer();
 
@@ -63,7 +63,7 @@ static void NetInitClient()
     SysNetUseAnyPort();
     // SysNetUsePort(27016);
 }
-bool SysNetRecvFrame(char* frame)
+inline bool SysNetRecvFrame(char* frame)
 {
     NetInitClient();
 
@@ -77,7 +77,7 @@ bool SysNetRecvFrame(char* frame)
 
     return true;
 }
-void SysNetSendInput(NetInput* input)
+inline void SysNetSendInput(NetInput* input)
 {
     NetInitClient();
 
@@ -100,8 +100,8 @@ void SysNetSendInput(NetInput* input)
     // if (input->a) message += 1;
 
     // TODO
-    uint64_t addr = SysNetCreateAddr(127, 0, 0, 1, 27015);
-    // uint64_t addr = SysNetCreateAddr(89, 28, 87, 65, 27015);     // machine2
+    // uint64_t addr = SysNetCreateAddr(127, 0, 0, 1, 27015);
+    uint64_t addr = SysNetCreateAddr(89, 28, 87, 65, 49151);     // machine2
     // uint64_t addr = SysNetCreateAddr(20, 215, 34, 35, 27015);    // azure
     // uint64_t addr = SysNetCreateAddr(168, 100, 238, 173, 27015); // shells
 

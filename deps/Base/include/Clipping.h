@@ -1,9 +1,12 @@
 #pragma once
 
+#include "BaseExt.h"
+#include "HelperExt.h"
+
 // functions made for specific case
 // maybe remove hardcoded values
 
-bool ClipLineBack(Vector3& v0, Vector3& v1)
+inline bool ClipLineBack(Vector3& v0, Vector3& v1)
 {
     float offset = 0.1f;
 
@@ -32,7 +35,7 @@ bool ClipLineBack(Vector3& v0, Vector3& v1)
         default /* 11 */ : return true;
     }
 }
-bool ClipLineLeft(Vector3& v0, Vector3& v1)
+inline bool ClipLineLeft(Vector3& v0, Vector3& v1)
 {
     float offset = -1;
 
@@ -61,7 +64,7 @@ bool ClipLineLeft(Vector3& v0, Vector3& v1)
         default /* 11 */ : return true;
     }
 }
-bool ClipLineRight(Vector3& v0, Vector3& v1)
+inline bool ClipLineRight(Vector3& v0, Vector3& v1)
 {
     float offset = 1;
 
@@ -90,7 +93,7 @@ bool ClipLineRight(Vector3& v0, Vector3& v1)
         default /* 11 */ : return true;
     }
 }
-bool ClipLineTop(Vector3& v0, Vector3& v1)
+inline bool ClipLineTop(Vector3& v0, Vector3& v1)
 {
     float offset = 1;
 
@@ -119,7 +122,7 @@ bool ClipLineTop(Vector3& v0, Vector3& v1)
         default /* 11 */ : return true;
     }
 }
-bool ClipLineBottom(Vector3& v0, Vector3& v1)
+inline bool ClipLineBottom(Vector3& v0, Vector3& v1)
 {
     float offset = -1;
 
@@ -149,7 +152,7 @@ bool ClipLineBottom(Vector3& v0, Vector3& v1)
     }
 }
 
-void ClipPoligonBack(vector<Vector3>& input, vector<Vector3>& output)
+inline void ClipPoligonBack(vector<Vector3>& input, vector<Vector3>& output)
 {
     float offset = 0.1f;
     int flags = 0;
@@ -194,7 +197,7 @@ void ClipPoligonBack(vector<Vector3>& input, vector<Vector3>& output)
         p0 = p1;
     }
 }
-void ClipPoligonLeft(vector<Vector3>& input, vector<Vector3>& output)
+inline void ClipPoligonLeft(vector<Vector3>& input, vector<Vector3>& output)
 {
     float offset = -1;
     int flags = 0;
@@ -239,7 +242,7 @@ void ClipPoligonLeft(vector<Vector3>& input, vector<Vector3>& output)
         p0 = p1;
     }
 }
-void ClipPoligonRight(vector<Vector3>& input, vector<Vector3>& output)
+inline void ClipPoligonRight(vector<Vector3>& input, vector<Vector3>& output)
 {
     float offset = 1;
     int flags = 0;
@@ -284,7 +287,7 @@ void ClipPoligonRight(vector<Vector3>& input, vector<Vector3>& output)
         p0 = p1;
     }
 }
-void ClipPoligonTop(vector<Vector3>& input, vector<Vector3>& output)
+inline void ClipPoligonTop(vector<Vector3>& input, vector<Vector3>& output)
 {
     float offset = 1;
     int flags = 0;
@@ -329,7 +332,7 @@ void ClipPoligonTop(vector<Vector3>& input, vector<Vector3>& output)
         p0 = p1;
     }
 }
-void ClipPoligonBottom(vector<Vector3>& input, vector<Vector3>& output)
+inline void ClipPoligonBottom(vector<Vector3>& input, vector<Vector3>& output)
 {
     float offset = -1;
     int flags = 0;
@@ -377,7 +380,7 @@ void ClipPoligonBottom(vector<Vector3>& input, vector<Vector3>& output)
 
 // maybe better line clipping
 
-int GetPointState(float x, float y)
+inline int GetPointState(float x, float y)
 {
     const int INSIDE = 0; // 0000
     const int LEFT   = 1; // 0001
@@ -399,7 +402,7 @@ int GetPointState(float x, float y)
 
 	return code;
 }
-void ClipLine(Vector3& p0, Vector3& p1, int& outCode)
+inline void ClipLine(Vector3& p0, Vector3& p1, int& outCode)
 {
     const int LEFT   = 1; // 0001
     const int RIGHT  = 2; // 0010
