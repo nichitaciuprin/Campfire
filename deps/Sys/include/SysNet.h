@@ -3,13 +3,12 @@
 
 #include <stdint.h>
 
-uint64_t NetCreateAddr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint16_t port);
-void NetPrintAddr(uint64_t addr);
-void NetPrintAddrAsHex(uint64_t addr);
-
-void NetUseAnyPort();
-void NetUsePort(int port);
-void NetSend(uint64_t* addr, char* buffer, int* messageSize);
-void NetRecv(uint64_t* addr, char* buffer, int* messageSize);
+uint64_t SysNetCreateAddr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint16_t port);
+void SysNetPrintAddr(uint64_t addr);
+void SysNetPrintAddrAsHex(uint64_t addr);
+void SysNetUseAnyPort();
+void SysNetUsePort(int port);
+void SysNetSend(uint64_t* addr, char* buffer, int* messageSize);
+void SysNetRecv(uint64_t* addr, char* buffer, int* messageSize);
 
 #endif

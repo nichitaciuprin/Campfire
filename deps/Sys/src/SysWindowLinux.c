@@ -8,7 +8,7 @@
 
 #include <X11/Xlib.h>
 
-typedef struct BitmapWindow
+typedef struct SysWindow
 {
     int width;
     int height;
@@ -31,11 +31,11 @@ typedef struct BitmapWindow
     bool keydown_DOWN;
     bool keydown_RIGHT;
 }
-BitmapWindow;
+SysWindow;
 
-BitmapWindow* BitmapWindow_Create(int x, int y, int clientWidth, int clientHeight)
+SysWindow* SysWindow_Create(int x, int y, int clientWidth, int clientHeight)
 {
-    BitmapWindow* instance = (BitmapWindow*)malloc(sizeof(BitmapWindow));
+    SysWindow* instance = (SysWindow*)malloc(sizeof(SysWindow));
 
     instance->windowClosed = false;
 
@@ -77,20 +77,20 @@ BitmapWindow* BitmapWindow_Create(int x, int y, int clientWidth, int clientHeigh
 
     return instance;
 }
-bool BitmapWindow_Exists(BitmapWindow* instance)
+bool SysWindow_Exists(SysWindow* instance)
 {
     return !instance->windowClosed;
 }
-void BitmapWindow_Destroy(BitmapWindow* instance)
+void SysWindow_Destroy(SysWindow* instance)
 {
-    if (!BitmapWindow_Exists(instance)) return;
+    if (!SysWindow_Exists(instance)) return;
 
     instance->windowClosed = true;
     XDestroyWindow(instance->display, instance->window);
 }
-void BitmapWindow_Update(BitmapWindow* instance)
+void SysWindow_Update(SysWindow* instance)
 {
-    if (!BitmapWindow_Exists(instance)) return;
+    if (!SysWindow_Exists(instance)) return;
 
     XEvent event;
 
@@ -186,15 +186,15 @@ void BitmapWindow_Update(BitmapWindow* instance)
         }
     }
 }
-void BitmapWindow_SetPixel(BitmapWindow* instance, int x, int y, uint32_t pixel)
+void SysWindow_SetPixel(SysWindow* instance, int x, int y, uint32_t pixel)
 {
-    if (!BitmapWindow_Exists(instance)) return;
+    if (!SysWindow_Exists(instance)) return;
 
     instance->pixels[x + y * instance->width] = pixel;
 }
-void BitmapWindow_SetPixels(BitmapWindow* instance, uint32_t* pixels, int width, int height)
+void SysWindow_SetPixels(SysWindow* instance, uint32_t* pixels, int width, int height)
 {
-    if (!BitmapWindow_Exists(instance)) return;
+    if (!SysWindow_Exists(instance)) return;
 
     memcpy(instance->pixels, pixels, 4 * width * height);
 
@@ -206,9 +206,9 @@ void BitmapWindow_SetPixels(BitmapWindow* instance, uint32_t* pixels, int width,
     //     instance->_pixels[x + y2 * width] = pixel;
     // }
 }
-void BitmapWindow_SetPixelsScaled(BitmapWindow* instance, uint32_t* pixels, int width, int height, int scale)
+void SysWindow_SetPixelsScaled(SysWindow* instance, uint32_t* pixels, int width, int height, int scale)
 {
-    if (!BitmapWindow_Exists(instance)) return;
+    if (!SysWindow_Exists(instance)) return;
 
     for (int y = 0; y < height; y++)
     for (int x = 0; x < width; x++)
@@ -219,12 +219,12 @@ void BitmapWindow_SetPixelsScaled(BitmapWindow* instance, uint32_t* pixels, int 
         int y2 = y * scale;
         for (int i = 0; i < scale; i++)
         for (int j = 0; j < scale; j++)
-            BitmapWindow_SetPixel(instance, x2+i, y2+j, pixel);
+            SysWindow_SetPixel(instance, x2+i, y2+j, pixel);
     }
 }
-void BitmapWindow_SetPixelsScaled2(BitmapWindow* instance, uint8_t* pixels, int width, int height, int scale)
+void SysWindow_SetPixelsScaled2(SysWindow* instance, uint8_t* pixels, int width, int height, int scale)
 {
-    if (!BitmapWindow_Exists(instance)) return;
+    if (!SysWindow_Exists(instance)) return;
 
     for (int y = 0; y < height; y++)
     for (int x = 0; x < width; x++)
@@ -238,16 +238,16 @@ void BitmapWindow_SetPixelsScaled2(BitmapWindow* instance, uint8_t* pixels, int 
         int y2 = y * scale;
         for (int i = 0; i < scale; i++)
         for (int j = 0; j < scale; j++)
-            BitmapWindow_SetPixel(instance, x2+i, y2+j, pixel);
+            SysWindow_SetPixel(instance, x2+i, y2+j, pixel);
     }
 }
-bool BitmapWindow_KeyDown_W(BitmapWindow* instance) { return instance->keydown_W; }
-bool BitmapWindow_KeyDown_A(BitmapWindow* instance) { return instance->keydown_A; }
-bool BitmapWindow_KeyDown_S(BitmapWindow* instance) { return instance->keydown_S; }
-bool BitmapWindow_KeyDown_D(BitmapWindow* instance) { return instance->keydown_D; }
-bool BitmapWindow_KeyDown_E(BitmapWindow* instance) { return instance->keydown_E; }
-bool BitmapWindow_KeyDown_Q(BitmapWindow* instance) { return instance->keydown_Q; }
-bool BitmapWindow_KeyDown_UP(BitmapWindow* instance) { return instance->keydown_UP; }
-bool BitmapWindow_KeyDown_LEFT(BitmapWindow* instance) { return instance->keydown_LEFT; }
-bool BitmapWindow_KeyDown_DOWN(BitmapWindow* instance) { return instance->keydown_DOWN; }
-bool BitmapWindow_KeyDown_RIGHT(BitmapWindow* instance) { return instance->keydown_RIGHT; }
+bool SysWindow_KeyDown_W(SysWindow* instance) { return instance->keydown_W; }
+bool SysWindow_KeyDown_A(SysWindow* instance) { return instance->keydown_A; }
+bool SysWindow_KeyDown_S(SysWindow* instance) { return instance->keydown_S; }
+bool SysWindow_KeyDown_D(SysWindow* instance) { return instance->keydown_D; }
+bool SysWindow_KeyDown_E(SysWindow* instance) { return instance->keydown_E; }
+bool SysWindow_KeyDown_Q(SysWindow* instance) { return instance->keydown_Q; }
+bool SysWindow_KeyDown_UP(SysWindow* instance) { return instance->keydown_UP; }
+bool SysWindow_KeyDown_LEFT(SysWindow* instance) { return instance->keydown_LEFT; }
+bool SysWindow_KeyDown_DOWN(SysWindow* instance) { return instance->keydown_DOWN; }
+bool SysWindow_KeyDown_RIGHT(SysWindow* instance) { return instance->keydown_RIGHT; }

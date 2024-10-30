@@ -98,7 +98,7 @@ static void NetInit()
     InitNetHelper();
 }
 
-uint64_t NetCreateAddr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint16_t port)
+uint64_t SysNetCreateAddr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint16_t port)
 {
     uint64_t ip = 0;
 
@@ -110,7 +110,7 @@ uint64_t NetCreateAddr(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4, uint16_t 
 
     return ip;
 }
-void NetPrintAddrAsHex(uint64_t addr)
+void SysNetPrintAddrAsHex(uint64_t addr)
 {
     for (size_t i = 0; i < 6; i++)
     {
@@ -120,7 +120,7 @@ void NetPrintAddrAsHex(uint64_t addr)
 
     printf("\n");
 }
-void NetPrintAddr(uint64_t addr)
+void SysNetPrintAddr(uint64_t addr)
 {
     { uint8_t byte = addr >> 8 * (5 - 0); int byte2 = byte; printf("%i", byte2); } printf(".");
     { uint8_t byte = addr >> 8 * (5 - 1); int byte2 = byte; printf("%i", byte2); } printf(".");
@@ -130,17 +130,17 @@ void NetPrintAddr(uint64_t addr)
     { uint16_t port = addr; printf("%i", port); }
 }
 
-void NetUseAnyPort()
+void SysNetUseAnyPort()
 {
     NetInit();
     netsock = CreateSocketNoBind();
 }
-void NetUsePort(int port)
+void SysNetUsePort(int port)
 {
     NetInit();
     netsock = CreateSocket(port);
 }
-void NetSend(uint64_t* addr, char* buffer, int* messageSize)
+void SysNetSend(uint64_t* addr, char* buffer, int* messageSize)
 {
     assert(addr != NULL);
     assert(buffer != NULL);
@@ -180,7 +180,7 @@ void NetSend(uint64_t* addr, char* buffer, int* messageSize)
 
     SendMessage(netsock, sockAddr, buffer, *messageSize);
 }
-void NetRecv(uint64_t* addr, char* buffer, int* messageSize)
+void SysNetRecv(uint64_t* addr, char* buffer, int* messageSize)
 {
     SOCKADDR sockAddr;
 

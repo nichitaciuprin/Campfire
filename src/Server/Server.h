@@ -19,7 +19,7 @@ void DestroyPlayers(float deltaTime)
         if (player.timer <= 0)
         {
             cout << "Player disconnected ";
-            NetPrintAddr(player.id);
+            SysNetPrintAddr(player.id);
             cout << endl;
 
             erase_back(players, i);
@@ -59,7 +59,7 @@ void UpdatePlayer(uint64_t playerAddr, NetInput& input)
     // cout << recvInput.id << endl;
 
     cout << "Player connected ";
-    NetPrintAddr(playerAddr);
+    SysNetPrintAddr(playerAddr);
     cout << endl;
 
     Player player = {};
@@ -186,7 +186,7 @@ void RenderGame()
         for (int i = 0; i < 1024; i++)
             buffer[i] = PixelToLightValue(bitmapNet->pixels[i]);
 
-        NetSendFrame(&player.id, buffer);
+        SysNetSendFrame(&player.id, buffer);
     }
 }
 void UpdateGame(float deltaTime)
@@ -196,7 +196,7 @@ void UpdateGame(float deltaTime)
     uint64_t addr;
     NetInput netInput;
 
-    while (NetRecvInput(&addr, &netInput))
+    while (SysNetRecvInput(&addr, &netInput))
     {
         UpdatePlayer(addr, netInput);
     }

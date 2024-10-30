@@ -15,22 +15,22 @@ static void NetInitServer()
     if (NetInitServerCalled) return;
         NetInitServerCalled = true;
 
-    NetUsePort(27015);
+    SysNetUsePort(27015);
 }
-void NetSendFrame(uint64_t* addr, char* frame)
+void SysNetSendFrame(uint64_t* addr, char* frame)
 {
     NetInitServer();
     int messageSize = 1024;
-    NetSend(addr, frame, &messageSize);
+    SysNetSend(addr, frame, &messageSize);
 }
-bool NetRecvInput(uint64_t* addr, NetInput* input)
+bool SysNetRecvInput(uint64_t* addr, NetInput* input)
 {
     NetInitServer();
 
     char buffer[1024];
     int messageSize = 0;
 
-    NetRecv(addr, buffer, &messageSize);
+    SysNetRecv(addr, buffer, &messageSize);
 
     if (messageSize < 0) return false;
 
@@ -60,10 +60,10 @@ static void NetInitClient()
     if (NetInitClientCalled) return;
         NetInitClientCalled = true;
 
-    NetUseAnyPort();
-    // NetUsePort(27016);
+    SysNetUseAnyPort();
+    // SysNetUsePort(27016);
 }
-bool NetRecvFrame(char* frame)
+bool SysNetRecvFrame(char* frame)
 {
     NetInitClient();
 
@@ -71,13 +71,13 @@ bool NetRecvFrame(char* frame)
 
     uint64_t addr;
 
-    NetRecv(&addr, frame, &messageSize);
+    SysNetRecv(&addr, frame, &messageSize);
 
     if (messageSize < 0) return false;
 
     return true;
 }
-void NetSendInput(NetInput* input)
+void SysNetSendInput(NetInput* input)
 {
     NetInitClient();
 
@@ -100,12 +100,12 @@ void NetSendInput(NetInput* input)
     // if (input->a) message += 1;
 
     // TODO
-    uint64_t addr = NetCreateAddr(127, 0, 0, 1, 27015);
-    // uint64_t addr = NetCreateAddr(89, 28, 87, 65, 27015);     // machine2
-    // uint64_t addr = NetCreateAddr(20, 215, 34, 35, 27015);    // azure
-    // uint64_t addr = NetCreateAddr(168, 100, 238, 173, 27015); // shells
+    uint64_t addr = SysNetCreateAddr(127, 0, 0, 1, 27015);
+    // uint64_t addr = SysNetCreateAddr(89, 28, 87, 65, 27015);     // machine2
+    // uint64_t addr = SysNetCreateAddr(20, 215, 34, 35, 27015);    // azure
+    // uint64_t addr = SysNetCreateAddr(168, 100, 238, 173, 27015); // shells
 
     int messageSize = 2;
 
-    NetSend(&addr, (char*)&bytes, &messageSize);
+    SysNetSend(&addr, (char*)&bytes, &messageSize);
 }

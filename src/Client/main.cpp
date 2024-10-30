@@ -32,7 +32,7 @@ int main()
         window->Update();
         window->SetPixelsScaled2((uint8_t *)frame, 32, 32, 16);
 
-        while (NetRecvFrame(frame)) {}
+        while (SysNetRecvFrame(frame)) {}
 
         NetInput netInput = {};
 
@@ -49,7 +49,7 @@ int main()
         netInput.q = window->KeyDown_Q();
         netInput.e = window->KeyDown_E();
 
-        NetSendInput(&netInput);
+        SysNetSendInput(&netInput);
 
         FixedTimeEnd();
     }
