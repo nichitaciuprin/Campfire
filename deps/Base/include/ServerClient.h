@@ -100,8 +100,8 @@ inline void SysNetSendInput(NetInput* input)
     // if (input->a) message += 1;
 
     // TODO
-    // uint64_t addr = SysNetCreateAddr(127, 0, 0, 1, 27015);
-    uint64_t addr = SysNetCreateAddr(89, 28, 87, 65, 49151);     // machine2
+    uint64_t addr = SysNetCreateAddr(127, 0, 0, 1, 27015);
+    // uint64_t addr = SysNetCreateAddr(89, 28, 87, 65, 49151);     // machine2
     // uint64_t addr = SysNetCreateAddr(20, 215, 34, 35, 27015);    // azure
     // uint64_t addr = SysNetCreateAddr(168, 100, 238, 173, 27015); // shells
 
