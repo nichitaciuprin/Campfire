@@ -15,7 +15,7 @@ set build=%batdir%build
 @REM -Og     optimize debugging experience. -Og enables optimizations that do not interfere with debugging. It should be the optimization level of choice for the standard edit-compile-debug cycle, offering a reasonable level of optimization while maintaining fast compilation and a good debugging experience.
 @REM -Os     optimize for size. -Os enables all -O2 optimizations that do not typically increase code size. It also performs further optimizations designed to reduce code size. -Os disables the following optimization flags: -falign-functions -falign-jumps -falign-loops -falign-labels -freorder-blocks -freorder-blocks-and-partition -fprefetch-loop-arrays -ftree-vect-loop-version
 
-set flags=-g3 -Og -Werror -Wall -std=c++17 -Wno-missing-braces -pthread -m64
+set flags=-g3 -Og -std=c++17 -Werror -Wall -Wno-missing-braces -pthread -m64
 
 set src=
 set src=%src% %deps%\Sys\src\SysHelper.c
