@@ -60,7 +60,7 @@ void NetInitClient(int argc, char** argv)
         cout << "   shells    -> 168.100.238.173:27015" << endl;
         cout << "   azure     -> 20.215.34.35:27015"    << endl;
         cout << "   machine1  -> 89.28.71.195:27015"    << endl;
-        cout << "   machine2  -> 89.28.87.65:49151"     << endl;
+        cout << "   machine2  -> 89.28.87.65:49161"     << endl;
 
         _serverAddr = SysNetCreateAddr(127, 0, 0, 1, 27015);
     }
@@ -81,7 +81,7 @@ void NetInitClient(int argc, char** argv)
             case 1: cout << "shells -> 168.100.238.173:27015"  << endl; _serverAddr = SysNetCreateAddr(168, 100, 238, 173, 27015); break;
             case 2: cout << "azure -> 20.215.34.35:27015"      << endl; _serverAddr = SysNetCreateAddr( 20, 215,  34,  35, 27015); break;
             case 3: cout << "machine1 -> 89.28.71.195:27015"   << endl; _serverAddr = SysNetCreateAddr( 89,  28,  71, 195, 27015); break;
-            case 4: cout << "machine2 -> 89.28.87.65:49151"    << endl; _serverAddr = SysNetCreateAddr( 89,  28,  87,  65, 49151); break;
+            case 4: cout << "machine2 -> 89.28.87.65:49161"    << endl; _serverAddr = SysNetCreateAddr( 89,  28,  87,  65, 49161); break;
             default: abort();
         }
     }
