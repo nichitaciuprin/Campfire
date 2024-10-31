@@ -134,11 +134,11 @@ inline int MathSignInt(int value)
 }
 inline int MathMinInt(int v1, int v2)
 {
-    return fmin(v1,v2);
+    return fmin(v1, v2);
 }
 inline int MathMaxInt(int v1, int v2)
 {
-    return fmax(v1,v2);
+    return fmax(v1, v2);
 }
 inline int MathClampInt(int value, int min, int max)
 {
@@ -148,11 +148,11 @@ inline int MathClampInt(int value, int min, int max)
 }
 inline float MathMinFloat(float value1, float value2)
 {
-    return fminf(value1,value2);
+    return fminf(value1, value2);
 }
 inline float MathMaxFloat(float value1, float value2)
 {
-    return fmaxf(value1,value2);
+    return fmaxf(value1, value2);
 }
 inline float MathAbs(float value)
 {
@@ -178,11 +178,11 @@ inline float MathCos(float f)
 }
 inline float MathInverseLerp(float x, float y, float value)
 {
-    return (value - x)/(y - x);
+    return (value - x) / (y - x);
 }
 inline float MathMod(float value, float div)
 {
-    return fmodf(value,div);
+    return fmodf(value, div);
 }
 inline float MathPingPong(float value, float length)
 {
@@ -354,8 +354,8 @@ inline Vector3 Vector3ClampLength(Vector3 vector, float min, float max)
 {
     float length = Vector3Length(vector);
     if (length <= 0)  return Vector3Zero();
-    if (length > max) return Vector3Multiply(vector, (max / length));
-    if (length < min) return Vector3Multiply(vector, (min / length));
+    if (length > max) return Vector3Multiply(vector, (max/length));
+    if (length < min) return Vector3Multiply(vector, (min/length));
     return vector;
 }
 inline Vector3 Vector3Normalize(Vector3 v)
@@ -535,25 +535,25 @@ inline Matrix MatrixMultiply(Matrix a, Matrix b)
     Vector4 col2 = { b.m[0][2], b.m[1][2], b.m[2][2], b.m[3][2] };
     Vector4 col3 = { b.m[0][3], b.m[1][3], b.m[2][3], b.m[3][3] };
 
-    float m00 = Vector4Dot(row0,col0);
-    float m01 = Vector4Dot(row0,col1);
-    float m02 = Vector4Dot(row0,col2);
-    float m03 = Vector4Dot(row0,col3);
+    float m00 = Vector4Dot(row0, col0);
+    float m01 = Vector4Dot(row0, col1);
+    float m02 = Vector4Dot(row0, col2);
+    float m03 = Vector4Dot(row0, col3);
 
-    float m10 = Vector4Dot(row1,col0);
-    float m11 = Vector4Dot(row1,col1);
-    float m12 = Vector4Dot(row1,col2);
-    float m13 = Vector4Dot(row1,col3);
+    float m10 = Vector4Dot(row1, col0);
+    float m11 = Vector4Dot(row1, col1);
+    float m12 = Vector4Dot(row1, col2);
+    float m13 = Vector4Dot(row1, col3);
 
-    float m20 = Vector4Dot(row2,col0);
-    float m21 = Vector4Dot(row2,col1);
-    float m22 = Vector4Dot(row2,col2);
-    float m23 = Vector4Dot(row2,col3);
+    float m20 = Vector4Dot(row2, col0);
+    float m21 = Vector4Dot(row2, col1);
+    float m22 = Vector4Dot(row2, col2);
+    float m23 = Vector4Dot(row2, col3);
 
-    float m30 = Vector4Dot(row3,col0);
-    float m31 = Vector4Dot(row3,col1);
-    float m32 = Vector4Dot(row3,col2);
-    float m33 = Vector4Dot(row3,col3);
+    float m30 = Vector4Dot(row3, col0);
+    float m31 = Vector4Dot(row3, col1);
+    float m32 = Vector4Dot(row3, col2);
+    float m33 = Vector4Dot(row3, col3);
 
     return (Matrix)
     {
