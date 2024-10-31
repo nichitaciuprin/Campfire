@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv)
 {
-    printf("PID:%ld\n", (long)GetPid());
+    printf("PID %ld\n", (long)GetPid());
 
     NetInitClient(argc, argv);
 
@@ -24,7 +24,7 @@ int main(int argc, char** argv)
         if (!window->Exists()) break;
 
         window->Update();
-        window->SetPixelsScaled2((uint8_t *)frame, 32, 32, 16);
+        window->SetPixelsScaled2((uint8_t*)frame, 32, 32, 16);
 
         while (SysNetRecvFrame(frame)) {}
 

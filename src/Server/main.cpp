@@ -1,7 +1,5 @@
 #include "SysHelper.h"
-// #include "SysWindow.h"
 #include "SysNet.h"
-
 #include "BaseExt.h"
 #include "Subgen.h"
 #include "Helper.h"
@@ -10,12 +8,13 @@
 #include "Bitmap.h"
 
 #include "ServerClient.h"
-
 #include "Server.h"
+
+// #include "SysWindow.h"
 
 int main(int argc, char** argv)
 {
-    printf("PID:%ld\n", (long)GetPid());
+    printf("PID %ld\n", (long)GetPid());
 
     NetInitServer(argc, argv);
 
