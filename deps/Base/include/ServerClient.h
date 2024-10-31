@@ -9,6 +9,11 @@ struct NetInput
     bool q, e;
 };
 
+void NetInitServer(int argc, char** argv)
+{
+    int32_t port = argc == 2 ? strtol(argv[1], NULL, 10) : 27015;
+    SysNetUsePort(port);
+}
 inline void SysNetSendFrame(uint64_t* addr, char* frame)
 {
     int messageSize = 1024;
@@ -43,19 +48,46 @@ inline bool SysNetRecvInput(uint64_t* addr, NetInput* input)
     return true;
 }
 
-static bool NetInitClientCalled = false;
-static void NetInitClient()
+static uint64_t _serverAddr;
+void NetInitClient(int argc, char** argv)
 {
-    if (NetInitClientCalled) return;
-        NetInitClientCalled = true;
-
     SysNetUseAnyPort();
-    // SysNetUsePort(27016);
+
+    if (argc == 1)
+    {
+        cout << "Try CampfireClient.exe servername"     << endl;
+        cout << "   localhost -> 127.0.0.1:27015"       << endl;
+        cout << "   shells    -> 168.100.238.173:27015" << endl;
+        cout << "   azure     -> 20.215.34.35:27015"    << endl;
+        cout << "   machine1  -> 89.28.71.195:27015"    << endl;
+        cout << "   machine2  -> 89.28.87.65:49151"     << endl;
+
+        _serverAddr = SysNetCreateAddr(127, 0, 0, 1, 27015);
+    }
+    if (argc == 2)
+    {
+        int option;
+
+        if (strcmp(argv[1], "localhost") == 0) option = 0; else
+        if (strcmp(argv[1], "shells")    == 0) option = 1; else
+        if (strcmp(argv[1], "azure")     == 0) option = 2; else
+        if (strcmp(argv[1], "machine1")  == 0) option = 3; else
+        if (strcmp(argv[1], "machine2")  == 0) option = 4; else
+        abort();
+
+        switch (option)
+        {
+            case 0: cout << "localhost -> 127.0.0.1:27015"     << endl; _serverAddr = SysNetCreateAddr(127,   0,   0,   1, 27015); break;
+            case 1: cout << "shells -> 168.100.238.173:27015"  << endl; _serverAddr = SysNetCreateAddr(168, 100, 238, 173, 27015); break;
+            case 2: cout << "azure -> 20.215.34.35:27015"      << endl; _serverAddr = SysNetCreateAddr( 20, 215,  34,  35, 27015); break;
+            case 3: cout << "machine1 -> 89.28.71.195:27015"   << endl; _serverAddr = SysNetCreateAddr( 89,  28,  71, 195, 27015); break;
+            case 4: cout << "machine2 -> 89.28.87.65:49151"    << endl; _serverAddr = SysNetCreateAddr( 89,  28,  87,  65, 49151); break;
+            default: abort();
+        }
+    }
 }
 inline bool SysNetRecvFrame(char* frame)
 {
-    NetInitClient();
-
     int messageSize = 0;
 
     uint64_t addr;
@@ -68,8 +100,6 @@ inline bool SysNetRecvFrame(char* frame)
 }
 inline void SysNetSendInput(NetInput* input)
 {
-    NetInitClient();
-
     uint8_t bytes[2] = {};
     // uint8_t message2 = 0;
 
@@ -88,13 +118,7 @@ inline void SysNetSendInput(NetInput* input)
     // if (input->w) message += 2;
     // if (input->a) message += 1;
 
-    // TODO
-    uint64_t addr = SysNetCreateAddr(127, 0, 0, 1, 27015);
-    // uint64_t addr = SysNetCreateAddr(89, 28, 87, 65, 49151);     // machine2
-    // uint64_t addr = SysNetCreateAddr(20, 215, 34, 35, 27015);    // azure
-    // uint64_t addr = SysNetCreateAddr(168, 100, 238, 173, 27015); // shells
-
     int messageSize = 2;
 
-    SysNetSend(&addr, (char*)&bytes, &messageSize);
+    SysNetSend(&_serverAddr, (char*)&bytes, &messageSize);
 }
