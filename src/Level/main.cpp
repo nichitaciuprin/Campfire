@@ -57,7 +57,7 @@ void main2()
     auto size = 512;
 
     auto bitmap = make_unique<Bitmap>(size, size);
-    auto window = make_unique<BitmapWindow2>(700, 100, size, size);
+    auto window = make_unique<Window>(700, 100, size, size);
 
     Camera camera = { 0, 1, 95 };
 

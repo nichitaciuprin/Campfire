@@ -13,9 +13,14 @@
 
 #include "Server.h"
 
-int main()
+int main(int argc, char** argv)
 {
+    int32_t port = argc == 2 ? strtol(argv[1], NULL, 10) : 27015
+
+    SysNetUsePort(port);
+
     printf("PID:%ld\n", (long)GetPid());
+    printf("Port:%i\n", port);
 
     Halt(3000);
 

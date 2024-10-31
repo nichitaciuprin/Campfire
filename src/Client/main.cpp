@@ -3,14 +3,18 @@
 #include "Window.h"
 #include "ServerClient.h"
 
-int main()
+int main(int argc, char** argv)
 {
+    printf("The value of argc is %d\n", argc);
+    for (int i = 0; i < argc; i++)
+        printf("%s\n", argv[i]);
+
     printf("PID:%ld\n", (long)GetPid());
 
     int x, y;
     GetConsolePosition(&x, &y);
 
-    auto window = make_unique<BitmapWindow2>(x, y, 512, 512);
+    auto window = make_unique<Window>(x, y, 512, 512);
 
     // missing memset to render stack, for fun
     char frame[1024];

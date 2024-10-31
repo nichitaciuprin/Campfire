@@ -9,24 +9,13 @@ struct NetInput
     bool q, e;
 };
 
-static bool NetInitServerCalled = false;
-static void NetInitServer()
-{
-    if (NetInitServerCalled) return;
-        NetInitServerCalled = true;
-
-    SysNetUsePort(27015);
-}
 inline void SysNetSendFrame(uint64_t* addr, char* frame)
 {
-    NetInitServer();
     int messageSize = 1024;
     SysNetSend(addr, frame, &messageSize);
 }
 inline bool SysNetRecvInput(uint64_t* addr, NetInput* input)
 {
-    NetInitServer();
-
     char buffer[1024];
     int messageSize = 0;
 

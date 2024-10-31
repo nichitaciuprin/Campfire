@@ -2,11 +2,11 @@
 
 #include "SysWindow.h"
 
-class BitmapWindow2
+class Window
 {
 public:
-    BitmapWindow2(int x, int y, int clientWidth, int clientHeight) { instance = SysWindow_Create(x, y, clientWidth, clientHeight); }
-    ~BitmapWindow2() { SysWindow_Destroy(instance); }
+    Window(int x, int y, int clientWidth, int clientHeight) { instance = SysWindow_Create(x, y, clientWidth, clientHeight); }
+    ~Window() { SysWindow_Destroy(instance); }
     bool Exists() const { return SysWindow_Exists(instance); }
     void Update() { SysWindow_Update(instance); }
     void SetPixel(int x, int y, uint32_t pixel) { SysWindow_SetPixel(instance, x, y, pixel); }
