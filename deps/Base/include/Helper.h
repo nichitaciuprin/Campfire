@@ -368,9 +368,9 @@ inline Vector3 Vector3Cross(Vector3 a, Vector3 b)
 {
     return (Vector3)
     {
-        a.y * b.z - a.z * b.y,
-        a.z * b.x - a.x * b.z,
-        a.x * b.y - a.y * b.x
+        a.y*b.z - a.z*b.y,
+        a.z*b.x - a.x*b.z,
+        a.x*b.y - a.y*b.x
     };
 }
 inline Vector3 Vector3RotateX(Vector3 v, float rot)
@@ -595,24 +595,24 @@ inline Matrix MatrixInvert(Matrix mat)
     float b10 = a21*a33 - a23*a31;
     float b11 = a22*a33 - a23*a32;
 
-    float invDet = 1.0f/(b00*b11 - b01*b10 + b02*b09 + b03*b08 - b04*b07 + b05*b06);
+    float invDet = 1.0f / (b00*b11 - b01*b10 + b02*b09 + b03*b08 - b04*b07 + b05*b06);
 
-    result.m[0][0] = ( a11*b11 - a12*b10 + a13*b09)*invDet;
-    result.m[0][1] = (-a01*b11 + a02*b10 - a03*b09)*invDet;
-    result.m[0][2] = ( a31*b05 - a32*b04 + a33*b03)*invDet;
-    result.m[0][3] = (-a21*b05 + a22*b04 - a23*b03)*invDet;
-    result.m[1][0] = (-a10*b11 + a12*b08 - a13*b07)*invDet;
-    result.m[1][1] = ( a00*b11 - a02*b08 + a03*b07)*invDet;
-    result.m[1][2] = (-a30*b05 + a32*b02 - a33*b01)*invDet;
-    result.m[1][3] = ( a20*b05 - a22*b02 + a23*b01)*invDet;
-    result.m[2][0] = ( a10*b10 - a11*b08 + a13*b06)*invDet;
-    result.m[2][1] = (-a00*b10 + a01*b08 - a03*b06)*invDet;
-    result.m[2][2] = ( a30*b04 - a31*b02 + a33*b00)*invDet;
-    result.m[2][3] = (-a20*b04 + a21*b02 - a23*b00)*invDet;
-    result.m[3][0] = (-a10*b09 + a11*b07 - a12*b06)*invDet;
-    result.m[3][1] = ( a00*b09 - a01*b07 + a02*b06)*invDet;
-    result.m[3][2] = (-a30*b03 + a31*b01 - a32*b00)*invDet;
-    result.m[3][3] = ( a20*b03 - a21*b01 + a22*b00)*invDet;
+    result.m[0][0] = ( a11*b11 - a12*b10 + a13*b09) * invDet;
+    result.m[0][1] = (-a01*b11 + a02*b10 - a03*b09) * invDet;
+    result.m[0][2] = ( a31*b05 - a32*b04 + a33*b03) * invDet;
+    result.m[0][3] = (-a21*b05 + a22*b04 - a23*b03) * invDet;
+    result.m[1][0] = (-a10*b11 + a12*b08 - a13*b07) * invDet;
+    result.m[1][1] = ( a00*b11 - a02*b08 + a03*b07) * invDet;
+    result.m[1][2] = (-a30*b05 + a32*b02 - a33*b01) * invDet;
+    result.m[1][3] = ( a20*b05 - a22*b02 + a23*b01) * invDet;
+    result.m[2][0] = ( a10*b10 - a11*b08 + a13*b06) * invDet;
+    result.m[2][1] = (-a00*b10 + a01*b08 - a03*b06) * invDet;
+    result.m[2][2] = ( a30*b04 - a31*b02 + a33*b00) * invDet;
+    result.m[2][3] = (-a20*b04 + a21*b02 - a23*b00) * invDet;
+    result.m[3][0] = (-a10*b09 + a11*b07 - a12*b06) * invDet;
+    result.m[3][1] = ( a00*b09 - a01*b07 + a02*b06) * invDet;
+    result.m[3][2] = (-a30*b03 + a31*b01 - a32*b00) * invDet;
+    result.m[3][3] = ( a20*b03 - a21*b01 + a22*b00) * invDet;
 
     return result;
 }
@@ -793,10 +793,10 @@ inline Vector3 ToEuler(Vector4 q)
 {
     Vector3 result;
 
-    const float x = q.x;
-    const float y = q.y;
-    const float z = q.z;
-    const float w = q.w;
+    float x = q.x;
+    float y = q.y;
+    float z = q.z;
+    float w = q.w;
 
     float x0 = 2.0f*(w*x + y*z);
     float x1 = 1.0f - 2.0f*(x*x + y*y);
@@ -840,7 +840,7 @@ inline bool Vector3TriangleIsClockwise(Vector3 p1, Vector3 p2, Vector3 p3)
 {
     Vector3 v1 = Vector3Subtract(p2, p1);
     Vector3 v2 = Vector3Subtract(p3, p1);
-    float crossZ = v1.x * v2.y - v1.y * v2.x;
+    float crossZ = v1.x*v2.y - v1.y*v2.x;
     return crossZ < 0;
 }
 
