@@ -1,28 +1,3 @@
-/*
- * Simple sound playback using ALSA API and libasound.
- *
- * Compile:
- * $ cc -o play sound_playback.c -lasound
- *
- * Usage:
- * $ ./play <sample_rate> <channels> <seconds> < <file>
- *
- * Examples:
- * $ ./play 44100 2 5 < /dev/urandom
- * $ ./play 22050 1 8 < /path/to/file.wav
- *
- * Copyright (C) 2009 Alessandro Ghedini <al3xbio@gmail.com>
- * --------------------------------------------------------------
- * "THE BEER-WARE LICENSE" (Revision 42):
- * Alessandro Ghedini wrote this file. As long as you retain this
- * notice you can do whatever you want with this stuff. If we
- * meet some day, and you think this stuff is worth it, you can
- * buy me a beer in return.
- * --------------------------------------------------------------
- */
-
-// ./build/main 11025 1 4 < ~/Music/test/romans.wav
-
 #include <stdio.h>
 #include <alsa/asoundlib.h>
 
@@ -50,27 +25,19 @@ void PrintParamInfo(snd_pcm_t* pcm_handle, snd_pcm_hw_params_t* params)
 
 int main(int argc, char** argv)
 {
-    if (argc < 4)
-    {
-        printf("Usage: %s <sample_rate> <channels> <seconds>\n", argv[0]);
-        return -1;
-    }
-
     unsigned int pcm;
     snd_pcm_t* pcm_handle;
     snd_pcm_hw_params_t* params;
-    snd_pcm_uframes_t frames;
 
     unsigned int rate = atoi(argv[1]);
     int channels      = atoi(argv[2]);
-    int seconds       = atoi(argv[3]);
 
-    const char* PCM_DEVICE = "default";
+    const char* pcmName = "default";
 
     // Open the PCM device in playback mode
-    pcm = snd_pcm_open(&pcm_handle, PCM_DEVICE, SND_PCM_STREAM_PLAYBACK, 0);
+    pcm = snd_pcm_open(&pcm_handle, pcmName, SND_PCM_STREAM_PLAYBACK, 0);
     if (pcm < 0)
-        printf("ERROR: Can't open \"%s\" PCM device. %s\n", PCM_DEVICE, snd_strerror(pcm));
+        printf("ERROR: Can't open \"%s\" PCM device. %s\n", pcmName, snd_strerror(pcm));
 
     // Allocate parameters object and fill it with default values
     snd_pcm_hw_params_alloca(&params);
@@ -101,6 +68,7 @@ int main(int argc, char** argv)
 
     PrintParamInfo(pcm_handle, params);
 
+    snd_pcm_uframes_t frames;
     unsigned int periodTime;
     snd_pcm_hw_params_get_period_size(params, &frames, 0);
     snd_pcm_hw_params_get_period_time(params, &periodTime, NULL);
