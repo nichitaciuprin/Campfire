@@ -1,10 +1,8 @@
 @echo off
 setlocal
 
-set root=%~dp0..\..
-set deps=%root%\deps
-set batdir=%~dp0
-set build=%batdir%build
+set deps=%~dp0..\..\deps
+set build=%~dp0build
 
 @REM -O      Same as -O1
 @REM -O0     do no optimize, the default if no optimization level is specified
