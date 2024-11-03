@@ -1,16 +1,8 @@
 #include "SysHelper.h"
-#include "SysNet.h"
-#include "BaseExt.h"
-#include "Subgen.h"
 #include "Helper.h"
-#include "Models.h"
-#include "Clipping.h"
 #include "Bitmap.h"
-
 #include "ServerClient.h"
 #include "Server.h"
-
-// #include "SysWindow.h"
 
 int main(int argc, char** argv)
 {
@@ -25,8 +17,6 @@ int main(int argc, char** argv)
     while (true)
     {
         FixedTimeStart();
-
-        // TestRender();
 
         RenderGame();
         UpdateGame(0.010f);
