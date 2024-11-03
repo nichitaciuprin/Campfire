@@ -201,28 +201,3 @@ void UpdateGame(float deltaTime)
         UpdatePlayer(addr, netInput);
     }
 }
-
-// unique_ptr<Bitmap> testBitmap;
-// unique_ptr<Window> testWindow;
-// bool TestRenderCalled = false;
-// void TestRender()
-// {
-//     if (!TestRenderCalled)
-//     {
-//         TestRenderCalled = true;
-
-//         int x, y;
-//         GetConsolePosition(&x, &y);
-
-//         testBitmap = make_unique<Bitmap>(512, 512);
-//         testWindow = make_unique<Window>(x, y, 512, 512);
-
-//         return;
-//     }
-
-//     Camera camera = { 0, 1, 95 };
-//     Draw(*testBitmap, camera, GetTime());
-//     // testBitmap->DrawBorder(GREEN);
-//     testWindow->SetPixels(testBitmap->pixels.data(), 32*16, 32*16);
-//     testWindow->Update();
-// }
