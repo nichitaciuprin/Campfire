@@ -1,10 +1,10 @@
 InlayHints:
-  BlockEnd: No
+  # BlockEnd: No
   Designators: Yes
   Enabled: No
   ParameterNames: Yes
   DeducedTypes: Yes
-  TypeNameLimit: 24
+  # TypeNameLimit: 24
 CompileFlags:
   Compiler: g++
 

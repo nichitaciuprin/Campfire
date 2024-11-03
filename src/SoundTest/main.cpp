@@ -29,8 +29,8 @@ int main(int argc, char** argv)
     snd_pcm_t* pcm_handle;
     snd_pcm_hw_params_t* params;
 
-    unsigned int rate = atoi(argv[1]);
-    int channels      = atoi(argv[2]);
+    uint32_t rate    = atoi(argv[1]);
+    int32_t channels = atoi(argv[2]);
 
     const char* pcmName = "default";
 
@@ -73,13 +73,13 @@ int main(int argc, char** argv)
     snd_pcm_hw_params_get_period_size(params, &frames, 0);
     snd_pcm_hw_params_get_period_time(params, &periodTime, NULL);
 
-    printf("frames %i\n", frames);
+    printf("frames %lu\n", frames);
 
     // Allocate buffer to hold single period
     int buffSize = frames * channels * 2;
     char* buff = (char*)malloc(buffSize);
 
-    size_t loops = (seconds * 1000000) / periodTime;
+    // size_t loops = (seconds * 1000000) / periodTime;
 
     for (size_t i = 0; i < 30; i++)
     {

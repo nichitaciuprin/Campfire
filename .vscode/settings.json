@@ -1,6 +1,6 @@
 {
     "clangd.arguments": [
-        "--query-driver=C:/Nichita/programs/mingw/x86_64-12.2.0-release-posix-seh-ucrt-rt_v10-rev2/mingw64/*"
+        // "--query-driver=C:/Nichita/programs/mingw/x86_64-12.2.0-release-posix-seh-ucrt-rt_v10-rev2/mingw64/*"
     ],
     "clangd.fallbackFlags": [
         "-std=c++17",
