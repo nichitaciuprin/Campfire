@@ -15,6 +15,7 @@ set src=%src% %deps%\corelib\src\SysNet.c
 set include=
 set include=%include% -I%~dp0src
 set include=%include% -I%deps%\corelib\include
+set include=%include% -I%deps%\shared\include
 
 set lib=
 set lib=%lib% -lgdi32

@@ -12,6 +12,7 @@ src="$src $deps/corelib/src/SysNet.c"
 include=
 include="$include -I./src"
 include="$include -I$deps/corelib/include"
+include="$include -I$deps/shared/include"
 
 lib=
 lib="$lib -lX11"
