@@ -6,7 +6,6 @@ flags="$flags -Werror -Wno-missing-braces -Wall"
 
 src=
 src="$src $deps/corelib/src/SysHelper.c"
-src="$src $deps/corelib/src/SysWindow.c"
 src="$src $deps/corelib/src/SysNet.c"
 
 include=

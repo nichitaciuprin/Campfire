@@ -71,7 +71,7 @@ void UpdatePlayer(uint64_t playerAddr, NetInput& input)
 
 void Draw(Bitmap& bitmap, Player& player, long time)
 {
-    bitmap.Fill(COLOR_BLACK);
+    bitmap.Reset();
 
     auto view = MatrixView3(&player.camera);
 
