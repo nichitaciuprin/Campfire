@@ -1,6 +1,7 @@
 #include "SysNet.h"
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <assert.h>
 
@@ -21,6 +22,7 @@ static void InitNetHelper()
         printf("WSAStartup failed with error %d\n", result);
 }
 
+// TODO remove?
 // static SOCKADDR CreateSocketAddress(const char* ip, short port)
 // {
 //     struct sockaddr_in addr;
@@ -29,7 +31,8 @@ static void InitNetHelper()
 //     addr.sin_addr.s_addr = inet_addr(ip);
 //     return *((SOCKADDR*)&addr);
 // }
-static SOCKET CreateSocketNoBind()
+
+static SOCKET SysNetCreateSocketNoBind()
 {
     SOCKET sock = INVALID_SOCKET;
     sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -43,7 +46,7 @@ static SOCKET CreateSocketNoBind()
 
     return sock;
 }
-static SOCKET CreateSocket(int port)
+static SOCKET SysNetCreateSocket(int port)
 {
     SOCKET sock = INVALID_SOCKET;
     sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -69,12 +72,12 @@ static SOCKET CreateSocket(int port)
 
     return sock;
 }
-static void SendMessage(SOCKET sock, SOCKADDR* addr, char* buffer, int messageSize)
+static void SysNetSendMessage(SOCKET sock, SOCKADDR* addr, char* buffer, int messageSize)
 {
     int addrSize = (sizeof(*addr));
     sendto(sock, buffer, messageSize, 0, addr, addrSize);
 }
-static void RecvMessage(SOCKET sock, SOCKADDR* addr, char* buffer, int* messageSize)
+static void SysNetRecvMessage(SOCKET sock, SOCKADDR* addr, char* buffer, int* messageSize)
 {
     int addrSize = (sizeof(*addr));
     int byteCount = recvfrom(sock, buffer, 1024, 0, addr, &addrSize);
@@ -88,12 +91,12 @@ static void RecvMessage(SOCKET sock, SOCKADDR* addr, char* buffer, int* messageS
     *messageSize = byteCount;
 }
 
-static SOCKET netsock;
-static bool NetInitCalled = false;
-static void NetInit()
+static SOCKET SysNetSocket;
+static bool SysNetInitCalled = false;
+static void SysNetInit()
 {
-    if (NetInitCalled) return;
-        NetInitCalled = true;
+    if (SysNetInitCalled) return;
+        SysNetInitCalled = true;
 
     InitNetHelper();
 }
@@ -132,13 +135,13 @@ void SysNetPrintAddr(uint64_t addr)
 
 void SysNetUseAnyPort()
 {
-    NetInit();
-    netsock = CreateSocketNoBind();
+    SysNetInit();
+    SysNetSocket = SysNetCreateSocketNoBind();
 }
 void SysNetUsePort(int port)
 {
-    NetInit();
-    netsock = CreateSocket(port);
+    SysNetInit();
+    SysNetSocket = SysNetCreateSocket(port);
 }
 void SysNetSend(uint64_t* addr, char* buffer, int* messageSize)
 {
@@ -148,7 +151,7 @@ void SysNetSend(uint64_t* addr, char* buffer, int* messageSize)
     assert(*addr != 0);
     assert(*messageSize >= 0);
 
-    sockaddr_in sockAddrIn;
+    struct sockaddr_in sockAddrIn;
 
     uint64_t id = *addr;
 
@@ -178,17 +181,17 @@ void SysNetSend(uint64_t* addr, char* buffer, int* messageSize)
 
     SOCKADDR* sockAddr = (SOCKADDR*)&sockAddrIn;
 
-    SendMessage(netsock, sockAddr, buffer, *messageSize);
+    SysNetSendMessage(SysNetSocket, sockAddr, buffer, *messageSize);
 }
 void SysNetRecv(uint64_t* addr, char* buffer, int* messageSize)
 {
     SOCKADDR sockAddr;
 
-    RecvMessage(netsock, &sockAddr, buffer, messageSize);
+    SysNetRecvMessage(SysNetSocket, &sockAddr, buffer, messageSize);
 
     if (*messageSize < 0) return;
 
-    sockaddr_in* sockAddrIn = (sockaddr_in*)&sockAddr;
+    struct sockaddr_in* sockAddrIn = (struct sockaddr_in*)&sockAddr;
 
     // char* ip = inet_ntoa(sockAddrIn->sin_addr);
     // cout << ip << endl;

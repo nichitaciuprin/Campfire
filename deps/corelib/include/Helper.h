@@ -723,7 +723,6 @@ inline Matrix MatrixView(Vector3 eye, float yaw, float pitch)
 {
     eye = Vector3Negative(eye);
     Matrix mat1 = MatrixTranslate(eye);
-    // TODO
     Matrix mat2 = MatrixRotateY(yaw);
     Matrix mat3 = MatrixRotateX(-pitch);
     Matrix result;
@@ -734,6 +733,8 @@ inline Matrix MatrixView(Vector3 eye, float yaw, float pitch)
 }
 inline Matrix MatrixView2(Vector3 eye, Vector3 target, Vector3 up)
 {
+    // it almost works, try fixing it
+    /*
     Vector3 zAxis = Vector3Subtract(target, eye);
             zAxis = Vector3Normalize(zAxis);
 
@@ -753,6 +754,27 @@ inline Matrix MatrixView2(Vector3 eye, Vector3 target, Vector3 up)
         zAxis.x, zAxis.y, zAxis.z, 0.0f,
               x,       y,       z, 1.0f
     };
+    */
+
+    Vector3 zAxis = Vector3Subtract(target, eye);
+            zAxis = Vector3Normalize(zAxis);
+
+    Vector3 xAxis = Vector3Cross(up, zAxis);
+            xAxis = Vector3Normalize(xAxis);
+
+    Vector3 yAxis = Vector3Cross(zAxis, xAxis);
+
+    Matrix result =
+    {
+        xAxis.x, xAxis.y, xAxis.z, 0,
+        yAxis.x, yAxis.y, yAxis.z, 0,
+        zAxis.x, zAxis.y, zAxis.z, 0,
+          eye.x,   eye.y,   eye.z, 1
+    };
+
+    result = MatrixInvert(result);
+
+    return result;
 }
 inline Matrix MatrixView3(const Camera* camera)
 {
@@ -905,41 +927,39 @@ inline void UpdateCameraRotation2(Camera* camera, float rotX, float rotY)
 }
 inline void UpdateCameraPosition(Camera* camera, float deltaTime, bool w, bool a, bool s, bool d, bool e, bool q)
 {
-    Matrix matrix = MatrixView3(camera);
-
-    Vector3 forward = { matrix.m[0][2], matrix.m[1][2], matrix.m[2][2] };
-    Vector3 up = Vector3Up();
-    Vector3 right = Vector3Cross(up,forward);
+    Vector3 x = GetAxisX(camera);
+    Vector3 y = GetAxisY(camera);
+    Vector3 z = GetAxisZ(camera);
 
     float speed = 50.0f;
     float speedDelta = speed * deltaTime;
 
-    forward = Vector3Multiply(forward, speedDelta);
-    right   = Vector3Multiply(right, speedDelta);
-    up      = Vector3Multiply(up, speedDelta);
+    x = Vector3Multiply(x, speedDelta);
+    y = Vector3Multiply(y, speedDelta);
+    z = Vector3Multiply(z, speedDelta);
 
-    if (w) camera->position = Vector3Add      (camera->position, forward);
-    if (s) camera->position = Vector3Subtract (camera->position, forward);
-    if (d) camera->position = Vector3Add      (camera->position, right);
-    if (a) camera->position = Vector3Subtract (camera->position, right);
-    if (e) camera->position = Vector3Add      (camera->position, up);
-    if (q) camera->position = Vector3Subtract (camera->position, up);
+    if (d) camera->position = Vector3Add      (camera->position, x);
+    if (a) camera->position = Vector3Subtract (camera->position, x);
+    if (e) camera->position = Vector3Add      (camera->position, y);
+    if (q) camera->position = Vector3Subtract (camera->position, y);
+    if (w) camera->position = Vector3Add      (camera->position, z);
+    if (s) camera->position = Vector3Subtract (camera->position, z);
 }
 inline void UpdateCameraPosition2(Camera* camera, Vector3 move)
 {
-    Vector3 forward = GetAxisZ(camera);
-    Vector3 up = GetAxisY(camera);
-    Vector3 right = Vector3Cross(up, forward);
-    right = Vector3Normalize(right);
-    up = Vector3Cross(forward, right);
+    // TODO double check it works
 
-    forward = (Vector3){ forward.x * move.z, forward.y * move.z, forward.z * move.z };
-    up      = (Vector3){ up.x      * move.y, up.y      * move.y, up.z      * move.y };
-    right   = (Vector3){ right.x   * move.x, right.y   * move.x, right.z   * move.x };
+    Vector3 x = GetAxisX(camera);
+    Vector3 y = GetAxisY(camera);
+    Vector3 z = GetAxisZ(camera);
 
-    camera->position = Vector3Add(camera->position, forward)    ;
-    camera->position = Vector3Add(camera->position, up);
-    camera->position = Vector3Add(camera->position, right);
+    x.x *= move.x; x.y *= move.x; x.z *= move.x;
+    y.x *= move.y; y.y *= move.y; y.z *= move.y;
+    z.x *= move.z; z.y *= move.z; z.z *= move.z;
+
+    camera->position = Vector3Add(camera->position, z);
+    camera->position = Vector3Add(camera->position, y);
+    camera->position = Vector3Add(camera->position, x);
 }
 
 inline void UpdateCameraFpsRotation(Camera* camera, Vector2 rot)
